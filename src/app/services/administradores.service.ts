@@ -13,16 +13,25 @@ const httpOptions = {
 })
 export class AdministradoresService {
 
+  // Definición de httpOptions
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
     private facadeService: FacadeService
-  ) { }
+  ) {}
 
-  public esquemaAdmin(){
+  // Esquema base del formulario de administrador
+  public esquemaAdmin() {
     return {
-      'rol':'',
+      'rol': '',
       'clave_admin': '',
       'first_name': '',
       'last_name': '',
@@ -33,73 +42,85 @@ export class AdministradoresService {
       'rfc': '',
       'edad': '',
       'ocupacion': ''
-    }
+    };
   }
 
-  //Validación para el formulario
-  public validarAdmin(data: any, editar: boolean){
-    console.log("Validando admin... ", data);
+  //Validación de los campos del formulario
+  public validarAdmin(data: any, editar: boolean) {
+    console.log('Validando admin...', data);
     let error: any = {};
 
-    //Validaciones
-    if(!this.validatorService.required(data["clave_admin"])){
-      error["clave_admin"] = this.errorService.required;
+    // Validar campos obligatorios
+    if (!this.validatorService.required(data['clave_admin'])) {
+      error['clave_admin'] = this.errorService.required;
     }
 
-    if(!this.validatorService.required(data["first_name"])){
-      error["first_name"] = this.errorService.required;
+    if (!this.validatorService.required(data['first_name'])) {
+      error['first_name'] = this.errorService.required;
     }
 
-    if(!this.validatorService.required(data["last_name"])){
-      error["last_name"] = this.errorService.required;
+    if (!this.validatorService.required(data['last_name'])) {
+      error['last_name'] = this.errorService.required;
     }
 
-    if(!this.validatorService.required(data["email"])){
-      error["email"] = this.errorService.required;
-    }else if(!this.validatorService.max(data["email"], 40)){
-      error["email"] = this.errorService.max(40);
-    }else if (!this.validatorService.email(data['email'])) {
+    if (!this.validatorService.required(data['email'])) {
+      error['email'] = this.errorService.required;
+    } else if (!this.validatorService.max(data['email'], 40)) {
+      error['email'] = this.errorService.max(40);
+    } else if (!this.validatorService.email(data['email'])) {
       error['email'] = this.errorService.email;
     }
 
-    if(!editar){
-      if(!this.validatorService.required(data["password"])){
-        error["password"] = this.errorService.required;
+    // Validar contraseñas solo si NO estamos editando
+    if (!editar) {
+      if (!this.validatorService.required(data['password'])) {
+        error['password'] = this.errorService.required;
       }
 
-      if(!this.validatorService.required(data["confirmar_password"])){
-        error["confirmar_password"] = this.errorService.required;
+      if (!this.validatorService.required(data['confirmar_password'])) {
+        error['confirmar_password'] = this.errorService.required;
       }
     }
 
-    if(!this.validatorService.required(data["rfc"])){
-      error["rfc"] = this.errorService.required;
-    }else if(!this.validatorService.min(data["rfc"], 12)){
-      error["rfc"] = this.errorService.min(12);
-      alert("La longitud de caracteres deL RFC es menor, deben ser 12");
-    }else if(!this.validatorService.max(data["rfc"], 13)){
-      error["rfc"] = this.errorService.max(13);
-      alert("La longitud de caracteres deL RFC es mayor, deben ser 13");
+    // Validar RFC
+    if (!this.validatorService.required(data['rfc'])) {
+      error['rfc'] = this.errorService.required;
+    } else if (!this.validatorService.min(data['rfc'], 12)) {
+      error['rfc'] = this.errorService.min(12);
+      alert('La longitud del RFC es menor, deben ser 12 caracteres.');
+    } else if (!this.validatorService.max(data['rfc'], 13)) {
+      error['rfc'] = this.errorService.max(13);
+      alert('La longitud del RFC es mayor, deben ser 13 caracteres.');
     }
 
-    if(!this.validatorService.required(data["edad"])){
-      error["edad"] = this.errorService.required;
-    }else if(!this.validatorService.numeric(data["edad"])){
-      alert("El formato es solo números");
-    }else if(data["edad"]<18){
-      error["edad"] = "La edad debe ser mayor o igual a 18";
+    // Validar edad
+    if (!this.validatorService.required(data['edad'])) {
+      error['edad'] = this.errorService.required;
+    } else if (!this.validatorService.numeric(data['edad'])) {
+      alert('El formato de la edad debe ser solo números.');
+    } else if (data['edad'] < 18) {
+      error['edad'] = 'La edad debe ser mayor o igual a 18.';
     }
 
-    if(!this.validatorService.required(data["telefono"])){
-      error["telefono"] = this.errorService.required;
+    // Validar teléfono
+    if (!this.validatorService.required(data['telefono'])) {
+      error['telefono'] = this.errorService.required;
     }
 
-    if(!this.validatorService.required(data["ocupacion"])){
-      error["ocupacion"] = this.errorService.required;
+    // Validar ocupación
+    if (!this.validatorService.required(data['ocupacion'])) {
+      error['ocupacion'] = this.errorService.required;
     }
 
-    //Return arreglo
+    // Devolver errores
     return error;
   }
+
+  //Método para enviar los datos al backend (crear administrador)
+public registrarAdministrador(data: any) {
+  console.log("URL de registro:", `${this.facadeService.apiUrl}/admin/`);
+  console.log("Datos enviados:", data);
+  return this.http.post(`${this.facadeService.apiUrl}/admin/`, data, this.httpOptions);
 }
 
+}

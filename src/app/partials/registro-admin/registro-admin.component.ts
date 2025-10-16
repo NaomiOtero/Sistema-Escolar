@@ -72,15 +72,24 @@ export class RegistroAdminComponent implements OnInit {
     this.location.back();
   }
 
-  public registrar(){
-    this.errors = {};
-    this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
-    if(Object.keys(this.errors).length > 0){
-      return false;
-    }
-    // TODO: Aquí va toda la lógica para registrar al administrador
-    console.log("Pasó la validación");
+  public registrar() {
+  this.errors = this.administradoresService.validarAdmin(this.admin, false);
+
+  if (Object.keys(this.errors).length === 0) {
+    this.administradoresService.registrarAdministrador(this.admin).subscribe({
+      next: (res) => {
+        console.log("Administrador registrado:", res);
+        // Redirigir o mostrar mensaje
+      },
+      error: (err) => {
+        console.error("Error al registrar:", err);
+        alert("Error al registrar administrador");
+      }
+    });
+  } else {
+    console.log("Errores en el formulario:", this.errors);
   }
+}
 
   public actualizar(){
 
