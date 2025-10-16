@@ -20,6 +20,7 @@ export class MaestrosService{
     })
   };
 
+
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
@@ -37,11 +38,11 @@ export class MaestrosService{
       'password': '',
       'fecha_nacimiento': '',
       'telefono': '',
-      'RFC': '',
-      'Cubiculo': '',
-      'Area de investigacion': '',
+      'rfc': '',
+      'cubiculo': '',
+      'area_investigacion': '',
       'materias_json': []
-    }
+    };
   }
 
   public validarMaestro(data: any, editar: boolean){
@@ -76,14 +77,22 @@ export class MaestrosService{
       }
     }
 
-    if(!this.validatorService.required(data["rfc"])){
-      error["rfc"] = this.errorService.required;
-    }else if(!this.validatorService.min(data["rfc"], 12)){
-      error["rfc"] = this.errorService.min(12);
-    }else if(!this.validatorService.max(data["rfc"], 13)){
-      error["rfc"] = this.errorService.max(13);
+    if (!this.validatorService.required(data['rfc'])) {
+      error['rfc'] = this.errorService.required;
+    } else if (!this.validatorService.min(data['rfc'], 12)) {
+      error['rfc'] = this.errorService.min(12);
+      alert('La longitud del RFC es menor, deben ser 12 caracteres.');
+    } else if (!this.validatorService.max(data['rfc'], 13)) {
+      error['rfc'] = this.errorService.max(13);
+      alert('La longitud del RFC es mayor, deben ser 13 caracteres.');
     }
-
+    if(!this.validatorService.min(data["telefono"], 10)){
+      error["telefono"] = this.errorService.min(10);
+      alert("La longitud del teléfono es menor, deben ser 10 caracteres.");
+    }else if(!this.validatorService.max(data["telefono"], 10)){
+      error["telefono"] = this.errorService.max(10);
+      alert("La longitud del teléfono es mayor, deben ser 10 caracteres.");
+    }
     if(!this.validatorService.required(data["telefono"])){
       error["telefono"] = this.errorService.required;
     }

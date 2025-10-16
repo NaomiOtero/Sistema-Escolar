@@ -108,7 +108,7 @@ export class AdministradoresService {
     }
 
     // Validar ocupación
-    if (!this.validatorService.required(data['ocupacion'])) {
+    if (!this.validatorService.required(data['ocupscion'])) {
       error['ocupacion'] = this.errorService.required;
     }
 
