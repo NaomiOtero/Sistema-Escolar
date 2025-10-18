@@ -14,7 +14,7 @@ export class RegistroAlumnosComponent implements OnInit {
   @Input() rol: string = "";
   @Input() datos_user: any = {};
 
- public alumno:any = {};
+  public alumno:any = {};
   public errors:any = {};
   public editar:boolean = false;
   public token: string = "";
@@ -42,29 +42,58 @@ export class RegistroAlumnosComponent implements OnInit {
     console.log("Datos alumno: ", this.alumno);
   }
 
+ public validarEstructuraRFC(event: KeyboardEvent) {
+  const inputChar = event.key.toUpperCase();
+  const currentValue = (this.alumno.rfc || "").toUpperCase();
+  const pos = currentValue.length;
+
+  // Permitir teclas de control
+  if (event.ctrlKey || event.altKey || event.metaKey || inputChar.length > 1) return;
+
+  // Permitir borrar, tabular o moverse
+  const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+  if (allowedKeys.includes(event.key)) return;
+
+  let regex: RegExp | null = null;
+
+  // RFC puede ser de 12 (persona moral) o 13 (física)
+  // Validamos según la posición actual
+  if (pos >= 0 && pos <= 2) regex = /^[A-Z]$/;            // Letras iniciales
+  else if (pos === 3) regex = /^[A-Z0-9]$/;               // 4ta posición (puede ser letra o número)
+  else if (pos >= 4 && pos <= 9) regex = /^[0-9]$/;       // Fecha AAMMDD
+  else if (pos >= 10 && pos <= 12) regex = /^[A-Z0-9]$/;  // Homoclave (3 últimos)
+  else event.preventDefault();                            // Evita más de 13 caracteres
+
+  // Validar carácter ingresado
+  if (regex && !regex.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
   public regresar(){
     this.location.back();
   }
 
   public registrar(){
     // Lógica para registrar un nuevo alumno
+    // Aquí se ejecuta la validación de la estructura de la CURP en el servicio
     this.errors = this.alumnosService.validarEstudiante(this.alumno, false);
 
     if (Object.keys(this.errors).length === 0) {
       this.alumnosService.registrarEstudiante(this.alumno).subscribe({
-        next: (res) => {
+        next: (res: any) => {
           console.log("Estudiante registrado:", res);
           // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redirigir al usuario
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error("Error al registrar el estudiante:", err);
-      alert("Error al registrar el estudiante. Por favor, intenta de nuevo.");
+          alert("Error al registrar el estudiante. Por favor, intenta de nuevo.");
+        }
+    });
+    }else{
+      console.log("Errores en el formulario:", this.errors);
     }
-  });
-}else{
-  console.log("Errores en el formulario:", this.errors);
-}
-}
+  }
 
   public actualizar(){
     // Lógica para actualizar los datos de un alumno existente
@@ -95,6 +124,15 @@ export class RegistroAlumnosComponent implements OnInit {
     }
   }
 
+    soloAlfanumerico(event: KeyboardEvent) {
+  const pattern = /^[a-zA-Z0-9]$/; // Solo letras y números
+  const inputChar = event.key;
+
+  if (!pattern.test(inputChar) && event.key !== 'Backspace' && event.key !== 'Tab') {
+    event.preventDefault();
+  }
+}
+
   //Función para detectar el cambio de fecha
   public changeFecha(event :any){
     console.log(event);
@@ -104,13 +142,40 @@ export class RegistroAlumnosComponent implements OnInit {
     console.log("Fecha: ", this.alumno.fecha_nacimiento);
   }
 
+  public validarEstructuraCURP(event: KeyboardEvent) {
+  const inputChar = event.key.toUpperCase();
+  const currentValue = (this.alumno.curp || "").toUpperCase();
+  const pos = currentValue.length;
+
+  const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+  if (allowedKeys.includes(event.key)) return;
+
+  let regex: RegExp | null = null;
+
+  // Determinar qué tipo de carácter se espera en cada posición
+  if (pos >= 0 && pos <= 3) regex = /^[A-Z]$/;           // Letras
+  else if (pos >= 4 && pos <= 9) regex = /^[0-9]$/;       // Fecha de nacimiento
+  else if (pos === 10) regex = /^[HM]$/;                  // Sexo
+  else if (pos >= 11 && pos <= 12) regex = /^[A-Z]$/;     // Entidad federativa
+  else if (pos >= 13 && pos <= 15) regex = /^[A-Z]$/;     // Consonantes internas
+  else if (pos >= 16 && pos <= 17) regex = /^[A-Z0-9]$/;  // Homoclave
+  else event.preventDefault();                            // No más de 18 caracteres
+
+  // Validar la tecla presionada
+  if (regex && !regex.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
+
+  // Se mantiene la función original soloLetras por si la usas en otros campos.
   public soloLetras(event: KeyboardEvent) {
     const charCode = event.key.charCodeAt(0);
     // Permitir solo letras (mayúsculas y minúsculas) y espacio
     if (
-      !(charCode >= 65 && charCode <= 90) &&  // Letras mayúsculas
+      !(charCode >= 65 && charCode <= 90) && // Letras mayúsculas
       !(charCode >= 97 && charCode <= 122) && // Letras minúsculas
-      charCode !== 32                         // Espacio
+      charCode !== 32 // Espacio
     ) {
       event.preventDefault();
     }

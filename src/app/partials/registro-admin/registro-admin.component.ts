@@ -95,6 +95,43 @@ export class RegistroAdminComponent implements OnInit {
 
   }
 
+  soloAlfanumerico(event: KeyboardEvent) {
+  const pattern = /^[a-zA-Z0-9]$/; // Solo letras y números
+  const inputChar = event.key;
+
+  if (!pattern.test(inputChar) && event.key !== 'Backspace' && event.key !== 'Tab') {
+    event.preventDefault();
+  }
+}
+
+  public validarEstructuraRFC(event: KeyboardEvent) {
+  const inputChar = event.key.toUpperCase();
+  const currentValue = (this.admin.rfc || "").toUpperCase();
+  const pos = currentValue.length;
+
+  // Permitir teclas de control
+  if (event.ctrlKey || event.altKey || event.metaKey || inputChar.length > 1) return;
+
+  // Permitir borrar, tabular o moverse
+  const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+  if (allowedKeys.includes(event.key)) return;
+
+  let regex: RegExp | null = null;
+
+  // RFC puede ser de 12 (persona moral) o 13 (física)
+  // Validamos según la posición actual
+  if (pos >= 0 && pos <= 2) regex = /^[A-Z]$/;            // Letras iniciales
+  else if (pos === 3) regex = /^[A-Z0-9]$/;               // 4ta posición (puede ser letra o número)
+  else if (pos >= 4 && pos <= 9) regex = /^[0-9]$/;       // Fecha AAMMDD
+  else if (pos >= 10 && pos <= 12) regex = /^[A-Z0-9]$/;  // Homoclave (3 últimos)
+  else event.preventDefault();                            // Evita más de 13 caracteres
+
+  // Validar carácter ingresado
+  if (regex && !regex.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
   // Función para los campos solo de datos alfabeticos
   public soloLetras(event: KeyboardEvent) {
     const charCode = event.key.charCodeAt(0);

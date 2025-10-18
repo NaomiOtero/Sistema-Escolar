@@ -8,9 +8,16 @@
         </div>
       </div>
       <!-- Aquí empiezan los campos del formulario -->
-      <mat-form-field class="mat-input" appearance="outline">
+        <mat-form-field class="mat-input" appearance="outline">
         <mat-label>ID de administrador</mat-label>
-        <input matInput [(ngModel)]="admin.clave_admin" name="id" placeholder="Escribe clave de administrador">
+        <input
+          matInput
+          maxlength="9"
+          [(ngModel)]="admin.clave_admin"
+          name="id"
+          placeholder="Escribe clave de administrador"
+          (keydown)="soloAlfanumerico($event)"
+          style="text-transform: uppercase;">
       </mat-form-field>
       <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
 
@@ -28,7 +35,7 @@
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Correo electrónico</mat-label>
-        <input matInput [(ngModel)]="admin.email" placeholder="Escribe correo electrónico" [disabled]="editar">
+        <input matInput [(ngModel)]="admin.email" placeholder="Escribe correo electrónico"  [disabled]="editar">
       </mat-form-field>
       <div *ngIf="errors.email" class="invalid-feedback">{{ errors.email }}</div>
 
@@ -55,10 +62,13 @@
       </mat-form-field>
       <div *ngIf="errors.telefono" class="invalid-feedback">{{ errors.telefono }}</div>
 
-      <mat-form-field class="mat-input mat-hint-margin" appearance="outline">
+     <mat-form-field class="mat-input mat-hint-margin" appearance="outline">
         <mat-label>RFC</mat-label>
-        <input matInput minlength="12" maxlength="13" [(ngModel)]="admin.rfc" placeholder="Escribe RFC"
-          style="text-transform: uppercase;">
+        <input matInput maxlength="13"
+              [(ngModel)]="admin.rfc"
+              placeholder="Escribe RFC"
+              style="text-transform: uppercase;"
+              (keydown)="validarEstructuraRFC($event)">
         <mat-hint align="end">{{admin.rfc?.length || 0}}/13</mat-hint>
       </mat-form-field>
       <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
@@ -71,7 +81,7 @@
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Ocupación</mat-label>
-        <input matInput [(ngModel)]="admin.ocupacion" placeholder="Escribe la ocupación">
+        <input matInput [(ngModel)]="admin.ocupacion" placeholder="Escribe la ocupación" (keypress)="soloLetras($event)">
       </mat-form-field>
       <div *ngIf="errors.ocupacion" class="invalid-feedback">{{ errors.ocupacion }}</div>
 

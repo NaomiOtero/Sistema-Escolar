@@ -7,11 +7,19 @@
           <label class="title-user" for="tipo_usuario">Ingresa los datos del alumno</label>
         </div>
       </div>
+
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID/Matrícula</mat-label>
-        <input matInput [(ngModel)]="alumno.matricula" mask="000000000" name="id" placeholder="Escribe ID o matrícula">
+        <mat-label>ID de administrador</mat-label>
+        <input
+          matInput
+          maxlength="9"
+          [(ngModel)]="alumno.clave_admin"
+          name="id"
+          placeholder="Escribe clave de administrador"
+          (keydown)="soloAlfanumerico($event)"
+          style="text-transform: uppercase;">
       </mat-form-field>
-      <div *ngIf="errors.matricula" class="invalid-feedback">{{ errors.matricula }}</div>
+      <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Nombre</mat-label>
@@ -56,15 +64,23 @@
 
       <mat-form-field class="mat-input mat-hint-margin" appearance="outline">
         <mat-label>CURP</mat-label>
-        <input matInput maxlength="18" [(ngModel)]="alumno.curp" placeholder="Escribe CURP" style="text-transform: uppercase;">
+        <input matInput maxlength="18"
+              [(ngModel)]="alumno.curp"
+              placeholder="Escribe CURP"
+              style="text-transform: uppercase;"
+              (keydown)="validarEstructuraCURP($event)">
         <mat-hint align="end">{{alumno.curp?.length || 0}}/18</mat-hint>
       </mat-form-field>
       <div *ngIf="errors.curp" class="invalid-feedback">{{ errors.curp }}</div>
 
       <mat-form-field class="mat-input mat-hint-margin" appearance="outline">
-          <mat-label>RFC</mat-label>
-          <input matInput minlength="12" maxlength="13" [(ngModel)]="alumno.rfc" placeholder="Escribe RFC" style="text-transform: uppercase;">
-          <mat-hint align="end">{{alumno.rfc?.length || 0}}/13</mat-hint>
+        <mat-label>RFC</mat-label>
+        <input matInput maxlength="13"
+              [(ngModel)]="alumno.rfc"
+              placeholder="Escribe RFC"
+              style="text-transform: uppercase;"
+              (keydown)="validarEstructuraRFC($event)">
+        <mat-hint align="end">{{alumno.rfc?.length || 0}}/13</mat-hint>
       </mat-form-field>
       <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
 
