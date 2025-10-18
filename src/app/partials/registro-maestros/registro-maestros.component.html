@@ -8,17 +8,16 @@
       </div>
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID de administrador</mat-label>
+        <mat-label>ID de maestro</mat-label>
         <input
           matInput
           maxlength="9"
-          [(ngModel)]="maestro.clave_admin"
-          name="id"
-          placeholder="Escribe clave de administrador"
+          [(ngModel)]="maestro.id_maestro"
+          placeholder="Escribe ID de maestro"
           (keydown)="soloAlfanumerico($event)"
           style="text-transform: uppercase;">
       </mat-form-field>
-      <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
+      <div *ngIf="errors.id_maestro" class="invalid-feedback">{{ errors.id_maestro }}</div>
 
       <mat-form-field class="mat-input" appearance="outline">
           <mat-label>Nombre</mat-label>

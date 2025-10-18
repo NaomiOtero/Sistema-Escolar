@@ -74,26 +74,25 @@ export class RegistroAlumnosComponent implements OnInit {
     this.location.back();
   }
 
-  public registrar(){
-    // Lógica para registrar un nuevo alumno
-    // Aquí se ejecuta la validación de la estructura de la CURP en el servicio
-    this.errors = this.alumnosService.validarEstudiante(this.alumno, false);
+public registrar() {
+  this.errors = this.alumnosService.validarEstudiante(this.alumno, false);
 
-    if (Object.keys(this.errors).length === 0) {
-      this.alumnosService.registrarEstudiante(this.alumno).subscribe({
-        next: (res: any) => {
-          console.log("Estudiante registrado:", res);
-          // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redirigir al usuario
-        },
-        error: (err: any) => {
-          console.error("Error al registrar el estudiante:", err);
-          alert("Error al registrar el estudiante. Por favor, intenta de nuevo.");
-        }
+  if (Object.keys(this.errors).length === 0) {
+    this.alumnosService.registrarEstudiante(this.alumno).subscribe({
+      next: (res) => {
+        console.log("Estudiante registrado:", res);
+        // Redirigir o mostrar mensaje
+      },
+      error: (err) => {
+        console.error("Error al registrar:", err);
+        alert("Error al registrar estudiante");
+      }
     });
-    }else{
-      console.log("Errores en el formulario:", this.errors);
-    }
+  } else {
+    console.log("Errores en el formulario:", this.errors);
   }
+}
+
 
   public actualizar(){
     // Lógica para actualizar los datos de un alumno existente

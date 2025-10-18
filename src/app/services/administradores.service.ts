@@ -116,11 +116,12 @@ export class AdministradoresService {
     return error;
   }
 
-  //Método para enviar los datos al backend (crear administrador)
+  //Método para enviar los datos al backend (crear administrador)s
 public registrarAdministrador(data: any) {
   console.log("URL de registro:", `${this.facadeService.apiUrl}/admin/`);
   console.log("Datos enviados:", data);
   return this.http.post(`${this.facadeService.apiUrl}/admin/`, data, this.httpOptions);
 }
+
 
 }

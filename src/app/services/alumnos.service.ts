@@ -121,9 +121,10 @@ export class AlumnosService {
   }
   //REGISTRAR ESTUDIANTE
   public registrarEstudiante(data: any) {
-    console.log("URL de registro:", `${this.facadeService.apiUrl}/alumno/`);
-    console.log("Datos enviados:", data);
-    return this.http.post(`${this.facadeService.apiUrl}/alumno/`, data, this.httpOptions);
-  }
+  console.log("URL de registro:", `${this.facadeService.apiUrl}/alumno/`);
+  console.log("Datos enviados:", data);
+  return this.http.post(`${this.facadeService.apiUrl}/alumno/`, data, this.httpOptions);
+}
+
 }
 

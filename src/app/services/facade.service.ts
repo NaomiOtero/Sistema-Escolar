@@ -22,7 +22,7 @@ const codigo_cookie_name = 'dev-sistema-escolar-codigo';
   providedIn: 'root'
 })
 export class FacadeService {
-  public apiUrl: string = 'http://localhost:8000/api'; // URL base de la API
+   public apiUrl: string = 'http://localhost:8000'; // URL base de la API
 
   constructor(
     private http: HttpClient,

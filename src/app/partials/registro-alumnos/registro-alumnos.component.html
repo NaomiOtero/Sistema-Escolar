@@ -9,17 +9,12 @@
       </div>
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID de administrador</mat-label>
-        <input
-          matInput
-          maxlength="9"
-          [(ngModel)]="alumno.clave_admin"
-          name="id"
-          placeholder="Escribe clave de administrador"
-          (keydown)="soloAlfanumerico($event)"
+        <mat-label>Matricula</mat-label>
+        <input matInput maxlength="9" [(ngModel)]="alumno.matricula" placeholder="Escribe matrícula"  (keydown)="soloAlfanumerico($event)"
           style="text-transform: uppercase;">
+
       </mat-form-field>
-      <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
+      <div *ngIf="errors.matricula" class="invalid-feedback">{{ errors.matricula }}</div>
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Nombre</mat-label>

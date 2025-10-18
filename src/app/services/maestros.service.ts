@@ -114,8 +114,10 @@ export class MaestrosService{
   }
   //REGISTRAR MAESTRO
   public registrarMaestro(data: any) {
-    console.log("URL de registro:", `${this.facadeService.apiUrl}/maestro/`);
-    console.log("Datos enviados:", data);
-    return this.http.post(`${this.facadeService.apiUrl}/maestro/`, data, this.httpOptions);
+  console.log("URL de registro:", `${this.facadeService.apiUrl}/maestro/`);
+  console.log("Datos enviados:", data);
+  return this.http.post(`${this.facadeService.apiUrl}/maestro/`, data, this.httpOptions);
 }
+
+
 }

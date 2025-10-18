@@ -72,7 +72,7 @@ export class RegistroAdminComponent implements OnInit {
     this.location.back();
   }
 
-  public registrar() {
+public registrar() {
   this.errors = this.administradoresService.validarAdmin(this.admin, false);
 
   if (Object.keys(this.errors).length === 0) {
@@ -90,6 +90,7 @@ export class RegistroAdminComponent implements OnInit {
     console.log("Errores en el formulario:", this.errors);
   }
 }
+
 
   public actualizar(){
 

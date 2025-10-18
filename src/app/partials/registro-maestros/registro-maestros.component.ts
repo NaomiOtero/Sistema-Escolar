@@ -69,27 +69,25 @@ export class RegistroMaestrosComponent implements OnInit {
     this.location.back();
   }
 
-  public registrar(){
-    // Lógica para registrar un nuevo maestro
-    this.errors = this.maestrosService.validarMaestro(this.maestro, false);
+public registrar() {
+  this.errors = this.maestrosService.validarMaestro(this.maestro, false);
 
-    if(Object.keys(this.errors).length == 0){
-      this.maestrosService.registrarMaestro(this.maestro).subscribe({
-        next: (res) => {
-          console.log("Maestro registrado:", res);
-          // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redirigir al usuario
-        },
-        error: (err) => {
-          console.error("Error al registrar el maestro:", err);
-          alert("Error al registrar el maestro. Por favor, intenta de nuevo.");
-        }
-      });
-    }else{
-      console.log("Errores en el formulario:", this.errors);
-      return false;
-    }
-
+  if (Object.keys(this.errors).length === 0) {
+    this.maestrosService.registrarMaestro(this.maestro).subscribe({
+      next: (res) => {
+        console.log("Maestro  registrado:", res);
+        // Redirigir o mostrar mensaje
+      },
+      error: (err) => {
+        console.error("Error al registrar:", err);
+        alert("Error al registrar maestro");
+      }
+    });
+  } else {
+    console.log("Errores en el formulario:", this.errors);
   }
+}
+
 
   public actualizar(){
 
