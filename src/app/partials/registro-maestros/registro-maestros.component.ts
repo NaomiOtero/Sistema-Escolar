@@ -52,12 +52,10 @@ export class RegistroMaestrosComponent implements OnInit {
     private location : Location,
     public activatedRoute: ActivatedRoute,
     private facadeService: FacadeService,
-    private maestrosService: MaestrosService,
-    private route: ActivatedRoute
+    private maestrosService: MaestrosService
   ) { }
 
   ngOnInit(): void {
-
     this.maestro = this.maestrosService.esquemaMaestro();
     // Rol del usuario
     this.maestro.rol = this.rol;
@@ -69,31 +67,46 @@ export class RegistroMaestrosComponent implements OnInit {
     this.location.back();
   }
 
-public registrar() {
-  this.errors = this.maestrosService.validarMaestro(this.maestro, false);
+public registrar(){
+    //Validamos si el formulario está lleno y correcto
+    this.errors = {};
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(Object.keys(this.errors).length > 0){
+      return false;
+    }
+    //Validar la contraseña
+    if(this.maestro.password == this.maestro.confirmar_password){
+      this.maestrosService.registrarMaestros(this.maestro).subscribe(
+        (response) => {
+          // Redirigir o mostrar mensaje de éxito
+          alert("Maestro registrado exitosamente");
+          console.log("Maestro registrado: ", response);
+          if(this.token && this.token !== ""){
+            this.router.navigate(["maestros"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },
+        (error) => {
+          // Manejar errores de la API
+          alert("Error al registrar maestro");
+          console.error("Error al registrar maestro: ", error);
+        }
+      );
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.maestro.password="";
+      this.maestro.confirmar_password="";
+    }
 
-  if (Object.keys(this.errors).length === 0) {
-    this.maestrosService.registrarMaestro(this.maestro).subscribe({
-      next: (res) => {
-        console.log("Maestro  registrado:", res);
-        // Redirigir o mostrar mensaje
-      },
-      error: (err) => {
-        console.error("Error al registrar:", err);
-        alert("Error al registrar maestro");
-      }
-    });
-  } else {
-    console.log("Errores en el formulario:", this.errors);
   }
-}
 
 
   public actualizar(){
 
   }
 
-    soloAlfanumerico(event: KeyboardEvent) {
+  soloAlfanumerico(event: KeyboardEvent) {
   const pattern = /^[a-zA-Z0-9]$/; // Solo letras y números
   const inputChar = event.key;
 

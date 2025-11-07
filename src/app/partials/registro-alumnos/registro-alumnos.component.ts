@@ -42,6 +42,49 @@ export class RegistroAlumnosComponent implements OnInit {
     console.log("Datos alumno: ", this.alumno);
   }
 
+public regresar(){
+    this.location.back();
+  }
+
+public registrar() {
+  //Validamos si el formulario está lleno y correcto
+    this.errors = {};
+    this.errors = this.alumnosService.validarAlumno(this.alumno, this.editar);
+    if(Object.keys(this.errors).length > 0){
+      return false;
+    }
+
+    // Lógica para registrar un nuevo alumno
+    if(this.alumno.password == this.alumno.confirmar_password){
+      this.alumnosService.registrarAlumno(this.alumno).subscribe(
+        (response) => {
+          // Redirigir o mostrar mensaje de éxito
+          alert("Alumno registrado exitosamente");
+          console.log("Alumno registrado: ", response);
+          if(this.token && this.token !== ""){
+            this.router.navigate(["alumnos"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },
+        (error) => {
+          // Manejar errores de la API
+          alert("Error al registrar alumno");
+          console.error("Error al registrar alumno: ", error);
+        }
+      );
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.alumno.password="";
+      this.alumno.confirmar_password="";
+    }
+  }
+
+public actualizar(){
+    // Lógica para actualizar los datos de un alumno existente
+  }
+
+
  public validarEstructuraRFC(event: KeyboardEvent) {
   const inputChar = event.key.toUpperCase();
   const currentValue = (this.alumno.rfc || "").toUpperCase();
@@ -69,34 +112,6 @@ export class RegistroAlumnosComponent implements OnInit {
     event.preventDefault();
   }
 }
-
-  public regresar(){
-    this.location.back();
-  }
-
-public registrar() {
-  this.errors = this.alumnosService.validarEstudiante(this.alumno, false);
-
-  if (Object.keys(this.errors).length === 0) {
-    this.alumnosService.registrarEstudiante(this.alumno).subscribe({
-      next: (res) => {
-        console.log("Estudiante registrado:", res);
-        // Redirigir o mostrar mensaje
-      },
-      error: (err) => {
-        console.error("Error al registrar:", err);
-        alert("Error al registrar estudiante");
-      }
-    });
-  } else {
-    console.log("Errores en el formulario:", this.errors);
-  }
-}
-
-
-  public actualizar(){
-    // Lógica para actualizar los datos de un alumno existente
-  }
 
   //Funciones para password
   showPassword()

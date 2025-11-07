@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { ErrorsService } from './tools/errors.service';
 import { ValidatorService } from './tools/validator.service';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,8 +23,6 @@ const codigo_cookie_name = 'dev-sistema-escolar-codigo';
   providedIn: 'root'
 })
 export class FacadeService {
-   public apiUrl: string = 'http://localhost:8000'; // URL base de la API
-
   constructor(
     private http: HttpClient,
     public router: Router,
@@ -57,6 +56,23 @@ export class FacadeService {
 
   }
 
+  // Funciones básicas
+  //Iniciar sesión
+  public login(username:String, password:String): Observable<any> {
+    let data = {
+      username: username,
+      password: password
+    }
+    return this.http.post<any>(`${environment.url_api}/token/`,data);
+  }
+
+  //Cerrar sesión
+  public logout(): Observable<any> {
+    let headers: any;
+    let token = this.getSessionToken();
+    headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/logout/`, {headers: headers});
+  }
 
   // Funciones para utilizar las cookies en web
   retrieveSignedUser(){

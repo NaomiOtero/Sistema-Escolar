@@ -25,11 +25,19 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+// IMPORTANTE: añade el módulo de Sidenav
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 //ngx-cookies-services
 import { CookieService } from 'ngx-cookie-service';
 
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
+import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
+import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
+import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
+import { NavbarUserComponent } from './partials/navbar-user/navbar-user.component';
+import { SidebarComponent } from './partials/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +48,13 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     AuthLayoutComponent,
     RegistroAlumnosComponent,
     RegistroMaestrosComponent,
-    RegistroAdminComponent
+    RegistroAdminComponent,
+    HomeScreenComponent,
+    AdminScreenComponent,
+    AlumnosScreenComponent,
+    MaestrosScreenComponent,
+    NavbarUserComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +71,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule
   ],
   providers: [
     CookieService,

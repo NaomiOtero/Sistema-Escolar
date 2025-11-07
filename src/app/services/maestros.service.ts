@@ -1,8 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FacadeService } from './facade.service';
 import { ErrorsService } from './tools/errors.service';
 import { ValidatorService } from './tools/validator.service';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,15 +13,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class MaestrosService{
-
-    // Definición de httpOptions
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
+export class MaestrosService {
 
   constructor(
     private http: HttpClient,
@@ -30,24 +24,26 @@ export class MaestrosService{
 
   public esquemaMaestro(){
     return {
-      'rol': '',
+      'rol':'',
       'id_maestro': '',
       'first_name': '',
       'last_name': '',
       'email': '',
       'password': '',
+      'confirmar_password': '',
       'fecha_nacimiento': '',
       'telefono': '',
       'rfc': '',
       'cubiculo': '',
       'area_investigacion': '',
       'materias_json': []
-    };
+    }
   }
 
+  //Validación para el formulario
   public validarMaestro(data: any, editar: boolean){
-    console.log('Validando maestro...', data);
-    let error: any = {};
+    console.log("Validando maestro... ", data);
+    let error: any = [];
 
     if(!this.validatorService.required(data["id_maestro"])){
       error["id_maestro"] = this.errorService.required;
@@ -63,8 +59,10 @@ export class MaestrosService{
 
     if(!this.validatorService.required(data["email"])){
       error["email"] = this.errorService.required;
-    }else if(!this.validatorService.email(data["email"])){
-      error["email"] = this.errorService.email;
+    }else if(!this.validatorService.max(data["email"], 40)){
+      error["email"] = this.errorService.max(40);
+    }else if (!this.validatorService.email(data['email'])) {
+      error['email'] = this.errorService.email;
     }
 
     if(!editar){
@@ -77,47 +75,50 @@ export class MaestrosService{
       }
     }
 
-    if (!this.validatorService.required(data['rfc'])) {
-      error['rfc'] = this.errorService.required;
-    } else if (!this.validatorService.min(data['rfc'], 12)) {
-      error['rfc'] = this.errorService.min(12);
-      alert('La longitud del RFC es menor, deben ser 12 caracteres.');
-    } else if (!this.validatorService.max(data['rfc'], 13)) {
-      error['rfc'] = this.errorService.max(13);
-      alert('La longitud del RFC es mayor, deben ser 13 caracteres.');
+    if(!this.validatorService.required(data["fecha_nacimiento"])){
+      error["fecha_nacimiento"] = this.errorService.required;
     }
-    if(!this.validatorService.min(data["telefono"], 10)){
-      error["telefono"] = this.errorService.min(10);
-      alert("La longitud del teléfono es menor, deben ser 10 caracteres.");
-    }else if(!this.validatorService.max(data["telefono"], 10)){
-      error["telefono"] = this.errorService.max(10);
-      alert("La longitud del teléfono es mayor, deben ser 10 caracteres.");
+
+    if(!this.validatorService.required(data["rfc"])){
+      error["rfc"] = this.errorService.required;
+    }else if(!this.validatorService.min(data["rfc"], 12)){
+      error["rfc"] = this.errorService.min(12);
+      alert("La longitud de caracteres deL RFC es menor, deben ser 12");
+    }else if(!this.validatorService.max(data["rfc"], 13)){
+      error["rfc"] = this.errorService.max(13);
+      alert("La longitud de caracteres deL RFC es mayor, deben ser 13");
     }
+
     if(!this.validatorService.required(data["telefono"])){
       error["telefono"] = this.errorService.required;
     }
-
 
     if(!this.validatorService.required(data["cubiculo"])){
       error["cubiculo"] = this.errorService.required;
     }
 
-    if (!data.area_investigacion || data.area_investigacion === '') {
-      error.area_investigacion = "Debes seleccionar un área de investigación.";
+    if(!this.validatorService.required(data["area_investigacion"])){
+      error["area_investigacion"] = this.errorService.required;
     }
 
-    if (!data.materias_json || data.materias_json.length === 0) {
-      error.materias_json = "Debes seleccionar al menos una materia.";
+    if(!this.validatorService.required(data["materias_json"])){
+      error["materias_json"] = "Debes seleccionar materias para poder registrarte";
     }
-
+    //Return arreglo
     return error;
   }
-  //REGISTRAR MAESTRO
-  public registrarMaestro(data: any) {
-  console.log("URL de registro:", `${this.facadeService.apiUrl}/maestro/`);
-  console.log("Datos enviados:", data);
-  return this.http.post(`${this.facadeService.apiUrl}/maestro/`, data, this.httpOptions);
-}
 
-
+  //Aquí van los servicios HTTP
+  //Servicio para registrar un nuevo usuario
+  public registrarMaestros(data: any): Observable <any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.post<any>(`${environment.url_api}/maestros/`, data, { headers });
+  }
 }

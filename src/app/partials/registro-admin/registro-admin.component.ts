@@ -72,25 +72,38 @@ export class RegistroAdminComponent implements OnInit {
     this.location.back();
   }
 
-public registrar() {
-  this.errors = this.administradoresService.validarAdmin(this.admin, false);
-
-  if (Object.keys(this.errors).length === 0) {
-    this.administradoresService.registrarAdministrador(this.admin).subscribe({
-      next: (res) => {
-        console.log("Administrador registrado:", res);
-        // Redirigir o mostrar mensaje
-      },
-      error: (err) => {
-        console.error("Error al registrar:", err);
-        alert("Error al registrar administrador");
-      }
-    });
-  } else {
-    console.log("Errores en el formulario:", this.errors);
+  public registrar(){
+    this.errors = {};
+    this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
+    if(Object.keys(this.errors).length > 0){
+      return false;
+    }
+    //Validar la contraseña
+    if(this.admin.password == this.admin.confirmar_password){
+      // Ejecutamos el servicio de registro
+      this.administradoresService.registrarAdministrador(this.admin).subscribe(
+        (response) => {
+          // Redirigir o mostrar mensaje de éxito
+          alert("Administrador registrado exitosamente");
+          console.log("Administrador registrado: ", response);
+          if(this.token && this.token !== ""){
+            this.router.navigate(["administrador"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },
+        (error) => {
+          // Manejar errores de la API
+          alert("Error al registrar administrador");
+          console.error("Error al registrar administrador: ", error);
+        }
+      );
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.admin.password="";
+      this.admin.confirmar_password="";
+    }
   }
-}
-
 
   public actualizar(){
 

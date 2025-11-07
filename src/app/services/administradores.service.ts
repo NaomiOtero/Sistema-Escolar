@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { FacadeService } from './facade.service';
 import { ErrorsService } from './tools/errors.service';
 import { ValidatorService } from './tools/validator.service';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -42,6 +44,7 @@ export class AdministradoresService {
       'rfc': '',
       'edad': '',
       'ocupacion': ''
+
     };
   }
 
@@ -116,12 +119,32 @@ export class AdministradoresService {
     return error;
   }
 
-  //Método para enviar los datos al backend (crear administrador)s
-public registrarAdministrador(data: any) {
-  console.log("URL de registro:", `${this.facadeService.apiUrl}/admin/`);
-  console.log("Datos enviados:", data);
-  return this.http.post(`${this.facadeService.apiUrl}/admin/`, data, this.httpOptions);
-}
+  //Aquí van los servicios HTTP
+  //Servicio para registrar un nuevo usuario
+  public registrarAdministrador (data: any): Observable <any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.post<any>(`${environment.url_api}/admin/`,data, { headers });
+  }
 
+  // Petición para obtener la lista de administradores
+public obtenerListaAdmins(): Observable<any>{
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log("No se encontró el token del usuario");
+
+    }
+    return this.http.get<any>(`${environment.url_api}/lista-admins/`, { headers });
+  }
 
 }
