@@ -10,14 +10,7 @@
       <!-- Aquí empiezan los campos del formulario -->
         <mat-form-field class="mat-input" appearance="outline">
         <mat-label>ID de administrador</mat-label>
-        <input
-          matInput
-          maxlength="9"
-          [(ngModel)]="admin.clave_admin"
-          name="id"
-          placeholder="Escribe clave de administrador"
-          (keydown)="soloAlfanumerico($event)"
-          style="text-transform: uppercase;">
+        <input matInput maxlength="9" [(ngModel)]="admin.clave_admin" name="id" placeholder="Escribe clave de administrador" (keydown)="soloAlfanumerico($event)" style="text-transform: uppercase;">
       </mat-form-field>
       <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
 

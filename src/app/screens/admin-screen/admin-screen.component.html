@@ -22,32 +22,79 @@
       </div>
       <!-- Tabla de administradores -->
       <ng-container *ngIf="lista_admins.length > 0; else noData">
+        <div class="table-scroll-wrapper"> <!-- mover en el eje x -->
+          <div class="mat-elevation-z8">
         <!-- Si la tabla contiene registros se muestran todos los datos -->
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Clave Admin</th>
-                <th scope="col">Nombre Completo</th>
-                <th scope="col">Email</th>
-                <th scope="col">RFC</th>
-                <th scope="col">Ocupación</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-               <tr *ngFor="let admin of lista_admins; let i=index">
-                <td>{{admin.clave_admin}}</td>
-                <td>{{admin.user.first_name}} {{admin.user.last_name}}</td>
-                <td>{{admin.user.email}}</td>
-                <td>{{admin.rfc}}</td>
-                <td>{{admin.ocupacion}}</td>
-                <td class="td-editar"><i class="bi bi-pencil-square" (click)="goEditar(admin.id)"></i></td>
-                <td class="td-eliminar"><i class="bi bi-trash3-fill" (click)="delete(admin.id)"></i></td>
-              </tr>
-            </tbody>
-          </table>
+        <table mat-table [dataSource]="dataSource" matSort class="min-width: 1200px; width: 100%;">
+
+          <!-- Clave Admin -->
+          <ng-container matColumnDef="clave_admin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Clave Admin</th>
+            <td mat-cell *matCellDef="let admin">{{ admin.clave_admin }}</td>
+          </ng-container>
+
+                  <!-- Nombre -->
+                  <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Completo</th>
+                    <td mat-cell *matCellDef="let admin">
+                      {{ admin.user.first_name }} {{ admin.user.last_name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Email -->
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                    <td mat-cell *matCellDef="let admin">{{ admin.user.email }}</td>
+                  </ng-container>
+
+                  <!-- RFC -->
+                  <ng-container matColumnDef="rfc">
+                    <th mat-header-cell *matHeaderCellDef >RFC</th>
+                    <td mat-cell *matCellDef="let admin">{{ admin.rfc }}</td>
+                  </ng-container>
+
+                  <!-- Ocupación -->
+                  <ng-container matColumnDef="ocupacion">
+                    <th mat-header-cell *matHeaderCellDef >Ocupación</th>
+                    <td mat-cell *matCellDef="let admin">{{ admin.ocupacion }}</td>
+                  </ng-container>
+
+                  <!-- 9a columna - Editar -->
+                  <ng-container matColumnDef="editar">
+                    <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                    <td mat-cell *matCellDef="let element" class="td-editar">
+                      <i class="bi bi-pencil-square" (click)="goEditar(element.id)"></i>
+                    </td>
+                  </ng-container>
+
+                  <!-- 10a columna - Eliminar -->
+                  <ng-container matColumnDef="eliminar">
+                    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                    <td mat-cell *matCellDef="let element" class="td-eliminar">
+                      <i class="bi bi-trash3-fill" (click)="delete(element.id)"></i>
+                    </td>
+                  </ng-container>
+
+                  <!-- Render rows -->
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+          <!-- PAGINACION -->
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements" style="min-width: 1200px; width: 100%;">
+        </mat-paginator>
+
+        <!-- BUSCADOR -->
+          <div class="row mb-3">
+            <div class="col-12">
+              <mat-form-field appearance="outline" style="width: 300px;">
+                <mat-label>Buscar Administrador</mat-label>
+                <input matInput (keyup)="applicarFiltro($event)" placeholder="Escribe un nombre o id">
+              </mat-form-field>
+            </div>
+          </div>
+
         </div>
       </ng-container>
       <!-- Esto se muestra cuando no hay datos -->

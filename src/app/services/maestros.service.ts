@@ -121,4 +121,61 @@ export class MaestrosService {
     }
     return this.http.post<any>(`${environment.url_api}/maestros/`, data, { headers });
   }
+
+    //Servicio para obtener la lista de maestros
+  public obtenerListaMaestros(): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, { headers });
+  }
+
+  public actualizarMaestro(data: any): Observable<any>{
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log("No se encontró el token del usuario");
+
+    }
+    return this.http.put<any>(`${environment.url_api}/maestros/`, data, { headers });
+  }
+
+   // Petición para obtener un maestro por su ID
+  public obtenerMaestroPorID(idMaestro: number): Observable<any>{
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log("No se encontró el token del usuario");
+    }
+    return this.http.get<any>(`${environment.url_api}/maestros/?id=${idMaestro}`, { headers });
+  }
+
+   //Eliminar maestro
+  //Servicio para eliminar un maestro
+  public eliminarMaestro(idMaestro: number): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.delete<any>(`${environment.url_api}/maestros/?id=${idMaestro}`, { headers });
+  }
+
 }
+
+
+

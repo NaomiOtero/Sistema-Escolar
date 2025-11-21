@@ -30,6 +30,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 //ngx-cookies-services
 import { CookieService } from 'ngx-cookie-service';
+// Paginación
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
+//ordenmiento
+import {MatSortModule} from '@angular/material/sort';
+//Para el paginator en español
+import { getSpanishPaginatorIntl } from './shared/spanish-paginator-intl';
+//dialogo
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
@@ -38,6 +46,8 @@ import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { NavbarUserComponent } from './partials/navbar-user/navbar-user.component';
 import { SidebarComponent } from './partials/sidebar/sidebar.component';
+import {MatTableModule} from '@angular/material/table';
+import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +64,8 @@ import { SidebarComponent } from './partials/sidebar/sidebar.component';
     AlumnosScreenComponent,
     MaestrosScreenComponent,
     NavbarUserComponent,
-    SidebarComponent
+    SidebarComponent,
+    EliminarUserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -73,10 +84,15 @@ import { SidebarComponent } from './partials/sidebar/sidebar.component';
     MatSelectModule,
     MatCheckboxModule,
     MatSidenavModule
+    ,MatTableModule
+    ,MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [
     CookieService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-MX'  },
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     provideNgxMask()
   ],
   bootstrap: [AppComponent]

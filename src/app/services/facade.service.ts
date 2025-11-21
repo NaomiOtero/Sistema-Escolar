@@ -12,12 +12,12 @@ const httpOptions = {
 };
 
 //Estas son variables para las cookies
-const session_cookie_name = 'dev-sistema-escolar-token';
-const user_email_cookie_name = 'dev-sistema-escolar-email';
-const user_id_cookie_name = 'dev-sistema-escolar-user_id';
-const user_complete_name_cookie_name = 'dev-sistema-escolar-user_complete_name';
-const group_name_cookie_name = 'dev-sistema-escolar-group_name';
-const codigo_cookie_name = 'dev-sistema-escolar-codigo';
+const session_cookie_name = 'naomi-sistemaescolar-token';
+const user_email_cookie_name = 'naomi-sistemaescolar-email';
+const user_id_cookie_name = 'naomi-sistemaescolar-user_id';
+const user_complete_name_cookie_name = 'naomi-sistemaescolar-user_complete_name';
+const group_name_cookie_name = 'naomi-sistemaescolar-group_name';
+const codigo_cookie_name = 'naomi-sistemaescolar-codigo';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,7 @@ export class FacadeService {
       username: username,
       password: password
     }
-    return this.http.post<any>(`${environment.url_api}/token/`,data);
+    return this.http.post<any>(`${environment.url_api}/login/`,data);
   }
 
   //Cerrar sesión

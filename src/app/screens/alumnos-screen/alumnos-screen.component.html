@@ -1,1 +1,112 @@
-<p>alumnos-screen works!</p>
+<div class="wrapper main-content-admin">
+  <div class="header-home-admin">
+  </div>
+  <div class="body-admin">
+    <!-- Datos iniciales de la vista de alumno -->
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">Bienvenido {{name_user}}</span>
+        <br>
+        <span class="title-perfil">Alumno</span>
+      </div>
+    </div>
+    <!-- Comienza el contenido de alumno -->
+    <div class="container">
+      <!-- Título de la tabla de alumnos -->
+      <div class="row mt-3 mb-5" style="text-align: center;">
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert">
+            <span class="title-table">Lista de alumnos registrados</span>
+          </div>
+        </div>
+      </div>
+       <!-- Tabla de alumnos  -->
+      <ng-container *ngIf="lista_alumnos.length > 0; else noData">
+        <div class="table-scroll-wrapper"> <!-- mover en el eje x -->
+          <div class="mat-elevation-z8">
+        <!-- Si la tabla contiene registros se muestran todos los datos -->
+        <table mat-table [dataSource]="dataSource" matSort class="min-width: 1200px; width: 100%;">
+
+          <!-- Clave Admin -->
+          <ng-container matColumnDef="matricula">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Matrícula</th>
+            <td mat-cell *matCellDef="let alumno">{{ alumno.matricula }}</td>
+          </ng-container>
+
+                  <!-- Nombre -->
+                  <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Completo</th>
+                    <td mat-cell *matCellDef="let alumno">
+                      {{ alumno.user.first_name }} {{ alumno.user.last_name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Email -->
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef >Email</th>
+                    <td mat-cell *matCellDef="let alumno">{{ alumno.user.email }}</td>
+                  </ng-container>
+
+                  <!-- RFC -->
+                  <ng-container matColumnDef="rfc">
+                    <th mat-header-cell *matHeaderCellDef>RFC</th>
+                    <td mat-cell *matCellDef="let alumno">{{ alumno.rfc }}</td>
+                  </ng-container>
+
+                  <!-- Ocupación -->
+                  <ng-container matColumnDef="ocupacion">
+                    <th mat-header-cell *matHeaderCellDef>Ocupación</th>
+                    <td mat-cell *matCellDef="let alumno">{{ alumno.ocupacion }}</td>
+                  </ng-container>
+
+                  <!-- 9a columna - Editar -->
+                  <ng-container matColumnDef="editar">
+                    <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                    <td mat-cell *matCellDef="let element" class="td-editar">
+                      <i class="bi bi-pencil-square" (click)="goEditar(element.id)"></i>
+                    </td>
+                  </ng-container>
+
+                  <!-- 10a columna - Eliminar -->
+                  <ng-container matColumnDef="eliminar">
+                    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                    <td mat-cell *matCellDef="let element" class="td-eliminar">
+                      <i class="bi bi-trash3-fill" (click)="delete(element.id)"></i>
+                    </td>
+                  </ng-container>
+
+                  <!-- Render rows -->
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+          <!-- PAGINACION -->
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements" style="min-width: 1200px; width: 100%;">
+        </mat-paginator>
+
+        <!-- BUSCADOR -->
+          <div class="row mb-3">
+            <div class="col-12">
+              <mat-form-field appearance="outline" style="width: 300px;">
+                <mat-label>Buscar Alumno</mat-label>
+                <input matInput (keyup)="applicarFiltro($event)" placeholder="Escribe un nombre o id">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <!-- Esto se muestra cuando no hay datos -->
+      <ng-template #noData>
+        <div class="row">
+          <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+              No hay alumnos registrados.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
