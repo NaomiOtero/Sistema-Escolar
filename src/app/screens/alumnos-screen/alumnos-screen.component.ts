@@ -18,8 +18,7 @@ export class AlumnosScreenComponent implements OnInit {
 
   public name_user: string = "";
   public lista_alumnos: any[] = [];
-  public rol: string = "";
-  public dialog: MatDialog;
+  rol: string;
 
   //Para la tabla
   displayedColumns: string[] = ['matricula','nombre','email','rfc', 'ocupacion', 'editar', 'eliminar'];
@@ -37,11 +36,13 @@ export class AlumnosScreenComponent implements OnInit {
     public FacadeService : FacadeService,
     private AlumnosService: AlumnosService,
     private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
 
     this.name_user = this.FacadeService.getUserCompleteName();
+    this.rol = this.FacadeService.getUserGroup();
     // Obtenemos los alumnos
     this.obtenerAlumnos();
 
@@ -86,8 +87,8 @@ public obtenerAlumnos() {
           });
         }
       }, (error) => {
-        console.error("Error al obtener la lista de maestros: ", error);
-        alert("No se pudo obtener la lista de maestros");
+        console.error("Error al obtener la lista de alumnos: ", error);
+        alert("No se pudo obtener la lista de alumnos");
       }
     );
   }
@@ -98,39 +99,41 @@ applicarFiltro(event: Event) {
 }
 
   public goEditar(idUser: number){
-    this.router.navigate(["registro-usuarios/alumno/"+idUser]);
+      const userId = Number(this.FacadeService.getUserId());
+
+      if (this.rol === 'alumno') {
+      alert("No tienes permisos para editar.");
+      return;
+      }
+   this.router.navigate(["registro-usuarios/alumno/"+idUser]);
 }
 
-public delete(idUser: number){
-        // Administrador puede eliminar cualquier maestro
-        // Maestro solo puede eliminar su propio registro
-        const userId = Number(this.FacadeService.getUserId());
-        console.log("Rol actual:", this.rol);
-        console.log("ID del usuario loggeado:", userId);
-        console.log("ID del alumno a eliminar:", idUser);
+public delete(idUser: number) {
+    // Administrador puede eliminar cualquier maestro
+    // Maestro solo puede eliminar su propio registro
+    const userId = Number(this.FacadeService.getUserId());
+    if (this.rol === 'administrador' || (this.rol === 'maestro' && userId === idUser)) {
+      //Si es administrador o es maestro, es decir, cumple la condición, se puede eliminar
+      const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+        data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
+        height: '288px',
+        width: '328px',
+      });
 
-        if (this.rol === 'administrador' || (this.rol === 'maestro' && userId === idUser)) {
-          //Si es administrador o es maestro, es decir, cumple la condición, se puede eliminar
-          const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-            data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
-            height: '288px',
-            width: '328px',
-          });
-
-        dialogRef.afterClosed().subscribe(result => {
-          if(result.isDelete){
-            console.log("Alumno eliminado");
-            alert("Alumno eliminado correctamente.");
-            //Recargar página
-            window.location.reload();
-          }else{
-            alert("Alumno no se ha podido eliminar.");
-            console.log("No se eliminó el alumno");
-          }
-        });
-        }else{
-          alert("No tienes permisos para eliminar este alumno.");
-        }
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Alumno eliminado");
+        alert("Alumno eliminado correctamente.");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Alumno no se ha podido eliminar.");
+        console.log("No se eliminó el alumno");
       }
+    });
+    }else{
+      alert("No tienes permisos para eliminar este alumno.");
+    }
+  }
 
   }

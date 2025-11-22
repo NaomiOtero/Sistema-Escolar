@@ -52,6 +52,7 @@ displayedColumns: string[] = [
   ngOnInit(): void {
     // Lógica de inicialización aquí
     this.name_user = this.facadeService.getUserCompleteName();
+    this.rol = this.facadeService.getUserGroup();
 
     // Obtenemos los administradores
     this.obtenerAdmins();
@@ -113,32 +114,32 @@ displayedColumns: string[] = [
     this.router.navigate(["registro-usuarios/administrador/"+idUser]);
   }
 
-    public delete(idUser: number) {
-        // Administrador puede eliminar cualquier maestro
-        // Maestro solo puede eliminar su propio registro
-        const userId = Number(this.facadeService.getUserId());
-        if (this.rol === 'administrador' || (this.rol === 'maestro' && userId === idUser)) {
-          //Si es administrador o es maestro, es decir, cumple la condición, se puede eliminar
-          const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-            data: {id: idUser, rol: 'administrador'}, //Se pasan valores a través del componente
-            height: '288px',
-            width: '328px',
-          });
+public delete(idUser: number) {
+    // Administrador puede eliminar cualquier maestro
+    // Maestro solo puede eliminar su propio registro
+    const userId = Number(this.facadeService.getUserId());
+    if (this.rol === 'administrador' || (this.rol === 'maestro' && userId === idUser)) {
+      //Si es administrador o es maestro, es decir, cumple la condición, se puede eliminar
+      const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+        data: {id: idUser, rol: 'administrador'}, //Se pasan valores a través del componente
+        height: '288px',
+        width: '328px',
+      });
 
-        dialogRef.afterClosed().subscribe(result => {
-          if(result.isDelete){
-            console.log("Administrador eliminado");
-            alert("Administrador eliminado correctamente.");
-            //Recargar página
-            window.location.reload();
-          }else{
-            alert("Administrador  no se ha podido eliminar.");
-            console.log("No se eliminó el administrador");
-          }
-        });
-        }else{
-          alert("No tienes permisos para eliminar este administrador.");
-        }
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Administrador eliminado");
+        alert("Administrador eliminado correctamente.");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Administrador no se ha podido eliminar.");
+        console.log("No se eliminó el administrador");
       }
+    });
+    }else{
+      alert("No tienes permisos para eliminar este administrador.");
+    }
+  }
 
 }
