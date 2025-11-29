@@ -15,15 +15,8 @@ const httpOptions = {
 })
 export class EventosService {
 
-  //definición de httpOptions
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
   constructor(
-    private httpClient: HttpClient,
+    private http: HttpClient,
     private ValidatorService: ValidatorService,
     private errorService: ErrorsService,
     private facadeService: FacadeService
@@ -32,16 +25,17 @@ export class EventosService {
   //Esquema base del formulario de evento
   public esquemaEvento() {
     return {
-      'rol': '',
-      'titulo': '',
-      'descripcion': '',
-      'date_initial': '',
+      'name_event': '',
+      'tipo_evento': '',
+      'fecha': '',
       'hora_inicio': '',
       'hora_final': '',
       'lugar': '',
-      'publico_objetivo': '',
+      'objetivo_json': [],
       'programa_educativo': '',
-      'responsable_evento': ''
+      'responsable_evento': '',
+      'descripcion': '',
+      'Asistentes': ''
     };
   }
 
@@ -51,16 +45,16 @@ export class EventosService {
     let error: any = {};
 
     // Validar campos obligatorios
-    if (!this.ValidatorService.required(data['titulo'])) {
-      error['titulo'] = this.errorService.required;
+    if (!this.ValidatorService.required(data['name_event'])) {
+      error['name_event'] = this.errorService.required;
     }
 
-    if (!this.ValidatorService.required(data['descripcion'])) {
-      error['descripcion'] = this.errorService.required;
+    if (!this.ValidatorService.required(data['tipo_evento'])) {
+      error['tipo_evento'] = this.errorService.required;
     }
 
-    if (!this.ValidatorService.required(data['date_initial'])) {
-      error['date_initial'] = this.errorService.required;
+    if (!this.ValidatorService.required(data['fecha'])) {
+      error['fecha'] = this.errorService.required;
     }
 
     if (!this.ValidatorService.required(data['hora_inicio'])) {
@@ -75,8 +69,8 @@ export class EventosService {
       error['lugar'] = this.errorService.required;
     }
 
-    if (!this.ValidatorService.required(data['publico_objetivo'])) {
-      error['publico_objetivo'] = this.errorService.required;
+    if(!this.ValidatorService.required(data["objetivo_json"])){
+      error["objetivo_json"] = "Debes seleccionar objetivos para poder registrar el evento";
     }
 
     if (!this.ValidatorService.required(data['programa_educativo'])) {
@@ -87,9 +81,18 @@ export class EventosService {
       error['responsable_evento'] = this.errorService.required;
     }
 
+    if (!this.ValidatorService.required(data['descripcion'])) {
+      error['descripcion'] = this.errorService.required;
+    }
+    if (!this.ValidatorService.required(data['Asistentes'])) {
+      error['Asistentes'] = this.errorService.required;
+    }
+
     return error;
   }
 
+
+  //peticiones HTTP
   public registrarEvento(data: any): Observable<any> {
     // Verificamos si existe el token de sesión
         const token = this.facadeService.getSessionToken();
@@ -99,6 +102,60 @@ export class EventosService {
         } else {
           headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         }
-        return this.httpClient.post<any>(`${environment.url_api}/eventos/`,data, { headers });
+        return this.http.post<any>(`${environment.url_api}/eventos/`,data, { headers });
       }
+    //Servicio para obtener la lista de maestros
+  public obtenerListaEventos(): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.get<any>(`${environment.url_api}/lista-eventos/`, { headers });
+  }
+
+  public actualizarEvento(data: any): Observable<any>{
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log("No se encontró el token del usuario");
+
+    }
+    return this.http.put<any>(`${environment.url_api}/eventos/?id`, data, { headers });
+  }
+
+  // Petición para obtener un maestro por su ID
+  public obtenerEventoPorID(idEvento : number): Observable<any>{
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log("No se encontró el token del usuario");
+    }
+    return this.http.get<any>(`${environment.url_api}/eventos/?id=${idEvento}`, { headers });
+  }
+
+   //Eliminar maestro
+  //Servicio para eliminar un maestro
+  public eliminarEvento(idEvento: number): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.delete<any>(`${environment.url_api}/eventos/?id=${idEvento}`, { headers });
+  }
+
+
 }

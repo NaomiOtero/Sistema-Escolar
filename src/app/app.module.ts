@@ -54,6 +54,7 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
 import { NgChartsModule } from 'ng2-charts';
 import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
 import { NuevoEventoScreenComponent } from './screens/nuevo-evento-screen/nuevo-evento-screen.component';
+import { EditarEventoModalComponent } from './modals/editar-evento-modal/editar-evento-modal.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { NuevoEventoScreenComponent } from './screens/nuevo-evento-screen/nuevo-
     EliminarUserModalComponent,
     GraficasScreenComponent,
     EventosScreenComponent,
-    NuevoEventoScreenComponent
+    NuevoEventoScreenComponent,
+    EditarEventoModalComponent
   ],
   imports: [
     BrowserModule,

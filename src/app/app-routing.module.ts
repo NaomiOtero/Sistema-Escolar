@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'login', component: LoginScreenComponent },
       { path: 'registro-usuarios', component: RegistroUsuariosScreenComponent },
       { path: 'registro-usuarios/:rol/:id', component: RegistroUsuariosScreenComponent },
+      { path: 'nuevo-evento/:id', component: NuevoEventoScreenComponent }
 
     ]
   },
@@ -34,7 +35,7 @@ const routes: Routes = [
       { path: 'maestros', component: MaestrosScreenComponent },
       {path: 'graficas', component: GraficasScreenComponent },
       {path: 'eventos-academicos', component: EventosScreenComponent },
-      {path: 'administrador/nuevo-evento', component: NuevoEventoScreenComponent }
+      {path: 'nuevo-evento', component: NuevoEventoScreenComponent }
 
     ]
   },

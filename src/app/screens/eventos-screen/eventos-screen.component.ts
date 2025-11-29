@@ -6,62 +6,172 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EventosService } from 'src/app/services/eventos.service';
 import { MatDialog } from '@angular/material/dialog';
+import { EliminarUserModalComponent } from 'src/app/modals/eliminar-user-modal/eliminar-user-modal.component';
+import { EditarEventoModalComponent } from 'src/app/modals/editar-evento-modal/editar-evento-modal.component';
 
 @Component({
   selector: 'app-eventos-screen',
   templateUrl: './eventos-screen.component.html',
   styleUrls: ['./eventos-screen.component.scss']
 })
-
 export class EventosScreenComponent implements OnInit {
- public name_user:string = "";
-  lista_eventos: any[] = [];
+
+  public name_user: string = "";
+  public rol: string = "";
+  public token: string = "";
+  lista_eventos: DatosEventos[] = [];
 
   displayedColumns: string[] = [
-    'nombre_evento',
+    'name_event',
+    'tipo_evento',
     'fecha',
+    'hora_inicio',
+    'hora_final',
     'lugar',
-    'responsable',
+    'responsable_evento',
+    'programa_educativo',
+    'Asistentes',
+    'objetivo_json',
+    'descripcion',
     'editar',
     'eliminar'
   ];
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<DatosEventos>(this.lista_eventos as DatosEventos[]);
 
-  @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  rol: string;
-
-  ngAfterViewInit() {
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.sort;
-  }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
   constructor(
     public facadeService: FacadeService,
     private eventosService: EventosService,
     private router: Router,
     public dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
+    //Validar que haya inicio de sesión
+    //Obtengo el token del login
+    this.token = this.facadeService.getSessionToken();
+    console.log("Token: ", this.token);
+    if (this.token == "") {
+      this.router.navigate(["/"]);
+    }
+    //Obtener eventos
 
+    this.obtenerEventos();
+
+    // Filtro de búsqueda
+    this.dataSource.filterPredicate = (data, filter) => {
+      const dataStr = `${data.name_event} ${data.tipo_evento} ${data.responsable_evento}`
+        .toLowerCase();
+      return dataStr.includes(filter);
+    };
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
+  obtenerEventos() {
+    this.eventosService.obtenerListaEventos().subscribe(
+      (response) => {
+        this.lista_eventos = response;
+        console.log("Eventos obtenidos:", this.lista_eventos);
+
+        this.dataSource = new MatTableDataSource(this.lista_eventos);
+
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      },
+      (error) => {
+        console.error("Error al obtener eventos:", error);
+        alert("No se pudo obtener la lista de eventos");
+      }
+    );
   }
 
   aplicarFiltro(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = value.trim().toLowerCase();
+    const filtro = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filtro.trim().toLowerCase();
   }
 
   nuevoEvento() {
-    // Lógica para agregar un nuevo evento
-  this.router.navigate(['/administrador/nuevo-evento']);
+    const userRol = this.rol?.toLowerCase();
 
+  if (userRol !== 'administrador') {
+    alert("No tienes permisos para editar eventos.");
+    return;
+  }
+  this.router.navigate(['/nuevo-evento']);
+}
+
+
+public editarEvento(idEvento: number) {
+  const userRol = this.rol?.toLowerCase();
+
+  if (userRol !== 'administrador') {
+    alert("No tienes permisos para editar eventos.");
+    return;
   }
 
-  editarEvento(id: number) {}
+  // Abrir modal de advertencia
+  const dialogRef = this.dialog.open(EditarEventoModalComponent, {
+    data: { id: idEvento },
+    width: '330px',
+    height: '270px',
+  });
 
-  eliminarEvento(id: number) {}
+  dialogRef.afterClosed().subscribe(result => {
+    if (result?.confirmar) {
+      this.router.navigate(['/nuevo-evento', idEvento]);
+    }
+  });
+}
+
+  public eliminarEvento(id: number) {
+    const userRol = this.rol?.toLowerCase();
+    if(userRol !== 'administrador') {
+      alert("No tienes permisos para eliminar eventos.");
+      return;
+    }
+
+    // Abrir modal de confirmación
+    const dialogRef = this.dialog.open(EliminarUserModalComponent, {
+      data: { id: id, rol: 'evento' },
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.isDelete) {
+        alert("Evento eliminado correctamente.");
+        this.obtenerEventos();
+      } else {
+        alert("No se eliminó el evento.");
+      }
+    });
+  }
+
+}
+//esto vas fuera del componente
+export interface DatosEventos {
+  id: number;
+  name_event: string;
+  tipo_evento: string;
+  fecha: string;
+  hora_inicio: string;
+  hora_final: string;
+  lugar: string;
+  responsable_evento: string;
+  programa_educativo: string;
+  Asistentes: string;
+  objetivo_json: string;
+  descripcion: string;
 }

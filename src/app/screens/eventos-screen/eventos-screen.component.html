@@ -25,7 +25,7 @@
       </div>
 
       <!-- Tabla -->
-      <ng-container *ngIf="lista_eventos.length > 0; else noEventos">
+      <ng-container *ngIf="lista_eventos.length > 0; else noData">
 
         <!-- Buscador -->
         <div class="row mb-3">
@@ -43,42 +43,83 @@
             <table mat-table [dataSource]="dataSource" matSort class="min-width: 1200px; width: 100%;">
 
               <!-- Nombre del Evento -->
-              <ng-container matColumnDef="nombre_evento">
+              <ng-container matColumnDef="name_event">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-                <td mat-cell *matCellDef="let row">{{ row.nombre_evento }}</td>
+                <td mat-cell *matCellDef="let evento">{{ evento.name_event }}</td>
+              </ng-container>
+
+              <!-- Tipo de Evento -->
+              <ng-container matColumnDef="tipo_evento">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Evento</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.tipo_evento }}</td>
               </ng-container>
 
               <!-- Fecha -->
               <ng-container matColumnDef="fecha">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
-                <td mat-cell *matCellDef="let row">{{ row.fecha | date }}</td>
+                <td mat-cell *matCellDef="let evento">{{ evento.fecha | date }}</td>
+              </ng-container>
+
+              <!-- Hora Inicio -->
+              <ng-container matColumnDef="hora_inicio">
+                <th mat-header-cell *matHeaderCellDef >Hora Inicio</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.hora_inicio }}</td>
+              </ng-container>
+
+              <!-- Hora Final -->
+              <ng-container matColumnDef="hora_final">
+                <th mat-header-cell *matHeaderCellDef >Hora Final</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.hora_final }}</td>
               </ng-container>
 
               <!-- Lugar -->
               <ng-container matColumnDef="lugar">
                 <th mat-header-cell *matHeaderCellDef >Lugar</th>
-                <td mat-cell *matCellDef="let row">{{ row.lugar }}</td>
+                <td mat-cell *matCellDef="let evento">{{ evento.lugar }}</td>
+              </ng-container>
+
+              <!--objetivo-->
+              <ng-container matColumnDef="objetivo_json">
+                <th mat-header-cell *matHeaderCellDef >Objetivo</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.objetivo_json }}</td>
+              </ng-container>
+
+              <!--PROGRAMA EDUCATIVO-->
+              <ng-container matColumnDef="programa_educativo">
+                <th mat-header-cell *matHeaderCellDef >Programa Educativo</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.programa_educativo }}</td>
               </ng-container>
 
               <!-- Responsable -->
-              <ng-container matColumnDef="responsable">
+              <ng-container matColumnDef="responsable_evento">
                 <th mat-header-cell *matHeaderCellDef >Responsable</th>
-                <td mat-cell *matCellDef="let row">{{ row.responsable }}</td>
+                <td mat-cell *matCellDef="let evento">{{ evento.responsable_evento }}</td>
+              </ng-container>
+
+              <!-- descripcion-->
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef >Descripción</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.descripcion }}</td>
+              </ng-container>
+              <!-- Asistentes -->
+              <ng-container matColumnDef="Asistentes">
+                <th mat-header-cell *matHeaderCellDef >Asistentes</th>
+                <td mat-cell *matCellDef="let evento">{{ evento.Asistentes }}</td>
               </ng-container>
 
               <!-- Editar -->
               <ng-container matColumnDef="editar">
                 <th mat-header-cell *matHeaderCellDef>Actualizar</th>
-                <td mat-cell *matCellDef="let row" class="td-editar">
-                  <i class="bi bi-pencil-square" (click)="editarEvento(row.id)"></i>
+                <td mat-cell *matCellDef="let evento" class="td-editar">
+                  <i class="bi bi-pencil-square" (click)="editarEvento(evento.id)"></i>
                 </td>
               </ng-container>
 
               <!-- Eliminar -->
               <ng-container matColumnDef="eliminar">
                 <th mat-header-cell *matHeaderCellDef>Eliminar</th>
-                <td mat-cell *matCellDef="let row" class="td-eliminar">
-                  <i class="bi bi-trash3-fill" (click)="eliminarEvento(row.id)"></i>
+                <td mat-cell *matCellDef="let evento" class="td-eliminar">
+                  <i class="bi bi-trash3-fill" (click)="eliminarEvento(evento.id)"></i>
                 </td>
               </ng-container>
 
@@ -98,7 +139,7 @@
       </ng-container>
 
       <!-- No data -->
-      <ng-template #noEventos>
+      <ng-template #noData>
         <div class="row">
           <div class="col-12">
             <div class="alert alert-warning">

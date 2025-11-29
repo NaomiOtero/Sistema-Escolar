@@ -1,105 +1,187 @@
-/* ============================================
-   CONTENEDOR GENERAL
-============================================ */
+
 .wrapper {
-  width: 100%;
   display: flex;
   justify-content: center;
-  background: #E6EEF1;
-  padding-top: 2rem;
-  padding-bottom: 4rem;
+  padding: 30px;
+  background: #e7f2f7; /* Fondo azul claro como la imagen */
 }
 
 .section-registro {
-  width: 90%;
-  max-width: 900px;
-}
-
-/* ============================================
-   CARD DEL FORMULARIO
-============================================ */
-.body-registro {
   width: 100%;
-  background: white;
-  border-radius: 12px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  max-width: 850px;
 }
 
-/* Título igual que la imagen */
+.body-registro {
+  background: #ffffff;
+  padding: 45px 55px;
+  border-radius: 18px;
+  border: 2px solid #d4e6ef; /* Borde celeste */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+
+/* =============================
+   TÍTULOS
+   ============================= */
 .title-user {
-  font-size: 26px;
-  font-family: Nexa-Bold;
-  color: #231F20;
+  font-size: 28px;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 5px;
 }
 
-/* ============================================
+.subtitle {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #666;
+}
+
+/* =============================
    CAMPOS MAT-FORM-FIELD
-============================================ */
+   ============================= */
 mat-form-field {
   width: 100%;
-}
+  margin-bottom: 22px;
 
-.invalid-feedback {
-  margin-left: 0.5rem;
-  color: #d9534f;
-  font-size: 13px;
-}
-
-/* ============================================
-   BOTONES
-============================================ */
-.section-buttons {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn-primary {
-  width: 200px;
-  height: 48px;
-  border-radius: 8px;
-  background: #0092B8 !important;
-  border: none !important;
-  font-size: 16px;
-  font-family: Nexa-Bold;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #017895 !important;
-}
-
-.btn-danger {
-  width: 200px;
-  height: 48px;
-  border-radius: 8px;
-  background: #777 !important;
-  border: none !important;
-  font-size: 16px;
-  font-family: Nexa-Bold;
-  color: white;
-}
-
-/* ============================================
-   RESPONSIVE
-============================================ */
-@media (max-width: 700px) {
-  .section-buttons {
-    flex-direction: column;
-    gap: 1rem;
+  .mat-mdc-form-field-outline {
+    border-radius: 12px !important;
   }
 
-  .btn-primary,
+  .mat-mdc-text-field-wrapper {
+    height: 58px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-floating-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #5b5b5b !important;
+  }
+}
+
+/* INPUTS MÁS ESTÉTICOS */
+::ng-deep .mat-mdc-form-field-outline-thick {
+  color: #0092b8 !important;
+}
+
+/* =============================
+   CHECKBOX SECTION
+   ============================= */
+.select-eventos {
+  background: #f7f9fb;
+  border-radius: 15px;
+  padding: 22px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #d9e8ef;
+
+  .title-eventos {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+  }
+}
+
+.checkbox-group {
+  padding: 6px 0;
+}
+
+.checkbox-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.d-checkbox-nombre {
+  font-size: 16px;
+  padding-left: 8px;
+  font-weight: 500;
+}
+
+/* =============================
+   CHECKBOX ESTILOS
+   ============================= */
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #0092b8 !important;
+  border-color: #0092b8 !important;
+}
+
+::ng-deep .mdc-checkbox__ripple {
+  transform: scale(1.3);
+}
+
+::ng-deep .mdc-checkbox__checkmark {
+  transform: scale(1.4);
+}
+
+/* =============================
+   TEXTAREA
+   ============================= */
+textarea {
+  resize: none !important;
+  padding-top: 10px !important;
+}
+
+/* =============================
+   ERRORES
+   ============================= */
+.invalid-feedback {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+/* =============================
+   BOTONES
+   ============================= */
+.section-buttons {
+  display: flex;
+  padding: 12px 24px;
+  justify-content: flex-end;
+  margin-top: 30px;
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  .btn-primary {
+    background: #0092b8;
+    color: white;
+    border: none;
+
+    &:hover {
+      background: #007b9a;
+    }
+  }
+
   .btn-danger {
-    width: 100%;
+    background: #d9534f;
+    color: white;
+    border: none;
+    margin-left: 15px;
+    padding-left: 24px;
+
+
+    &:hover {
+      background: #c3423f;
+    }
+  }
+}
+
+/* =============================
+   RESPONSIVE
+   ============================= */
+@media (max-width: 600px) {
+  .body-registro {
+    padding: 30px 25px;
   }
 
   .title-user {
-    text-align: center;
-    font-size: 22px;
+    font-size: 23px;
   }
 }
