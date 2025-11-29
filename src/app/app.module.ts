@@ -38,6 +38,8 @@ import {MatSortModule} from '@angular/material/sort';
 import { getSpanishPaginatorIntl } from './shared/spanish-paginator-intl';
 //dialogo
 import {MatDialogModule} from '@angular/material/dialog';
+//efcha
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
@@ -48,6 +50,10 @@ import { NavbarUserComponent } from './partials/navbar-user/navbar-user.componen
 import { SidebarComponent } from './partials/sidebar/sidebar.component';
 import {MatTableModule} from '@angular/material/table';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { NgChartsModule } from 'ng2-charts';
+import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
+import { NuevoEventoScreenComponent } from './screens/nuevo-evento-screen/nuevo-evento-screen.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +71,10 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     MaestrosScreenComponent,
     NavbarUserComponent,
     SidebarComponent,
-    EliminarUserModalComponent
+    EliminarUserModalComponent,
+    GraficasScreenComponent,
+    EventosScreenComponent,
+    NuevoEventoScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +96,9 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     ,MatTableModule
     ,MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    NgChartsModule,
+    NgxMatTimepickerModule
   ],
   providers: [
     CookieService,

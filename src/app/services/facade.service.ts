@@ -23,6 +23,12 @@ const codigo_cookie_name = 'naomi-sistemaescolar-codigo';
   providedIn: 'root'
 })
 export class FacadeService {
+  getEventos() {
+    throw new Error('Method not implemented.');
+  }
+  getUserName(): string {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private http: HttpClient,
     public router: Router,
