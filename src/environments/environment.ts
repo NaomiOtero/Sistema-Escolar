@@ -4,6 +4,6 @@
 
 export const environment = {
   production: false,
-  url_api: 'https://naomis79.pythonanywhere.com/admin/'
+  url_api: 'https://naomis79.pythonanywhere.com/'
 
 };
