@@ -6,7 +6,7 @@
       <div class="col-12">
         <span class="title-perfil">Bienvenido {{ name_user }}</span>
         <br>
-        <span class="title-perfil">Administrador</span>
+        <span class="title-perfil">{{ rol }}</span>
       </div>
     </div>
 
@@ -26,7 +26,6 @@
 
       <!-- Tabla -->
       <ng-container *ngIf="lista_eventos.length > 0; else noData">
-
         <!-- Buscador -->
         <div class="row mb-3">
           <div class="col-12">
@@ -108,7 +107,7 @@
               </ng-container>
 
               <!-- Editar -->
-              <ng-container matColumnDef="editar">
+              <ng-container *ngIf="rol === 'administrador'" matColumnDef="editar">
                 <th mat-header-cell *matHeaderCellDef>Actualizar</th>
                 <td mat-cell *matCellDef="let evento" class="td-editar">
                   <i class="bi bi-pencil-square" (click)="editarEvento(evento.id)"></i>
@@ -116,7 +115,7 @@
               </ng-container>
 
               <!-- Eliminar -->
-              <ng-container matColumnDef="eliminar">
+              <ng-container *ngIf="rol === 'administrador'" matColumnDef="eliminar">
                 <th mat-header-cell *matHeaderCellDef>Eliminar</th>
                 <td mat-cell *matCellDef="let evento" class="td-eliminar">
                   <i class="bi bi-trash3-fill" (click)="eliminarEvento(evento.id)"></i>

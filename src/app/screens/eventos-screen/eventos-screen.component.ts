@@ -20,23 +20,7 @@ export class EventosScreenComponent implements OnInit {
   public rol: string = "";
   public token: string = "";
   lista_eventos: DatosEventos[] = [];
-
-  displayedColumns: string[] = [
-    'name_event',
-    'tipo_evento',
-    'fecha',
-    'hora_inicio',
-    'hora_final',
-    'lugar',
-    'responsable_evento',
-    'programa_educativo',
-    'Asistentes',
-    'objetivo_json',
-    'descripcion',
-    'editar',
-    'eliminar'
-  ];
-
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<DatosEventos>(this.lista_eventos as DatosEventos[]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -59,6 +43,42 @@ export class EventosScreenComponent implements OnInit {
     if (this.token == "") {
       this.router.navigate(["/"]);
     }
+
+    this.rol = this.facadeService.getUserGroup();
+
+          if (this.rol === 'administrador') {
+            this.displayedColumns = [
+              'name_event',
+              'tipo_evento',
+              'fecha',
+              'hora_inicio',
+              'hora_final',
+              'lugar',
+              'responsable_evento',
+              'programa_educativo',
+              'Asistentes',
+              'objetivo_json',
+              'descripcion',
+              'editar',
+              'eliminar'
+            ];
+      } else {
+        this.displayedColumns = [
+              'name_event',
+              'tipo_evento',
+              'fecha',
+              'hora_inicio',
+              'hora_final',
+              'lugar',
+              'responsable_evento',
+              'programa_educativo',
+              'Asistentes',
+              'objetivo_json',
+              'descripcion',
+        ];
+
+  }
+
     //Obtener eventos
 
     this.obtenerEventos();
@@ -80,7 +100,7 @@ export class EventosScreenComponent implements OnInit {
   obtenerEventos() {
     this.eventosService.obtenerListaEventos().subscribe(
       (response) => {
-        this.lista_eventos = response;
+        this.lista_eventos = response.filter(e => this.puedeVerEvento(e));
         console.log("Eventos obtenidos:", this.lista_eventos);
 
         this.dataSource = new MatTableDataSource(this.lista_eventos);
@@ -96,6 +116,32 @@ export class EventosScreenComponent implements OnInit {
       }
     );
   }
+
+   // Role helpers
+  isAdmin(): boolean {
+    return this.rol === 'administrador';
+  }
+  isTeacher(): boolean {
+    return this.rol === 'maestro';
+  }
+  isStudent(): boolean {
+    return this.rol === 'alumno';
+  }
+
+  puedeVerEvento(evento: any): boolean {
+
+  if (this.isAdmin()) return true;
+
+  if (this.isTeacher()) {
+    return this.canSeeEventoTeacher(evento);
+  }
+
+  if (this.isStudent()) {
+    return this.canSeeEventoStudent(evento);
+  }
+
+  return false;
+}
 
   aplicarFiltro(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
@@ -158,8 +204,17 @@ public editarEvento(idEvento: number) {
       }
     });
   }
+  canSeeEventoTeacher(evento: any): boolean {
+  return evento.objetivo_json.includes("Profesores") ||
+         evento.objetivo_json.includes("Publico General");
+}
+  canSeeEventoStudent(evento: any): boolean {
+  return evento.objetivo_json.includes("Estudiantes") ||
+         evento.objetivo_json.includes("Publico General");
+}
 
 }
+
 //esto vas fuera del componente
 export interface DatosEventos {
   id: number;

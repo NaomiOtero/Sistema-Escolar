@@ -99,8 +99,8 @@ displayedColumns: string[] = [
           });
         }
       }, (error) => {
-        console.error("Error al obtener la lista de maestros: ", error);
-        alert("No se pudo obtener la lista de maestros");
+        console.error("Error al obtener la lista de administradores: ", error);
+        alert("No se pudo obtener la lista de administradores");
       }
     );
   }

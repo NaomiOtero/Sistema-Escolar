@@ -21,6 +21,16 @@
         </div>
       </div>
       <!-- Tabla de administradores -->
+        <!-- BUSCADOR -->
+          <div class="row mb-3">
+            <div class="col-12">
+              <mat-form-field appearance="outline" style="width: 300px;">
+                <mat-label>Buscar Administrador</mat-label>
+                <input matInput (keyup)="applicarFiltro($event)" placeholder="Escribe un nombre o id">
+              </mat-form-field>
+            </div>
+          </div>
+
       <ng-container *ngIf="lista_admins.length > 0; else noData">
         <div class="table-scroll-wrapper"> <!-- mover en el eje x -->
           <div class="mat-elevation-z8">
@@ -85,15 +95,6 @@
                 aria-label="Select page of periodic elements" style="min-width: 1200px; width: 100%;">
         </mat-paginator>
 
-        <!-- BUSCADOR -->
-          <div class="row mb-3">
-            <div class="col-12">
-              <mat-form-field appearance="outline" style="width: 300px;">
-                <mat-label>Buscar Administrador</mat-label>
-                <input matInput (keyup)="applicarFiltro($event)" placeholder="Escribe un nombre o id">
-              </mat-form-field>
-            </div>
-          </div>
 
         </div>
       </ng-container>

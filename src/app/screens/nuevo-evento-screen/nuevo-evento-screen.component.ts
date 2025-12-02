@@ -108,6 +108,7 @@ public regresar(){
       }
     );
   }
+  
 
   public actualizar(){
 
@@ -255,24 +256,29 @@ convertirAMPMa24(time: string): string {
   return `${hh}:${minuto}`;
 }
   errorHora: string = "";
-  validarHoras() {
-    const inicio = this.evento.hora_inicio;
-    const final = this.evento.hora_final;
 
-    if (!inicio || !final){
-      this.errorHora = "";
-      return;
-    }
-    //conertir a minutos para comparar
-    const horaInicio = new Date(`200-01-01T${ inicio}:00`);
-    const horaFinal = new Date(`200-01-01T${ final}:00`);
+validarHoras() {
+  if (!this.evento.hora_inicio || !this.evento.hora_final) return;
 
-    if (horaFinal <= horaInicio) {
-      this.errorHora = "La hora final debe ser mayor que la hora de inicio.";
-    } else {
-      this.errorHora = "";
-    }
+  const inicio = this.convertirHora(this.evento.hora_inicio);
+  const final = this.convertirHora(this.evento.hora_final);
+
+  if (final <= inicio) {
+    this.errorHora = "La hora final debe ser mayor que la hora de inicio.";
+  } else {
+    this.errorHora = "" ;
   }
+}
+
+convertirHora(hora: string): Date {
+  const [h, m] = hora.split(':').map(Number);
+  const fecha = new Date();
+  fecha.setHours(h);
+  fecha.setMinutes(m);
+  fecha.setSeconds(0);
+  return fecha;
+}
+
 
   //Función para manejar el cambio en los checkboxes
     // Funciones para los checkbox

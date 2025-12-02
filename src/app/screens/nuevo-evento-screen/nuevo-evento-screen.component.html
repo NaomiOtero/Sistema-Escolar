@@ -41,14 +41,14 @@
         </div>
 
       <!-- Hora de inicio -->
-        <mat-form-field appearance="outline" *ngIf="!editar">
+        <mat-form-field appearance="outline">
           <mat-label>Hora de Inicio</mat-label>
-            <input matInput [ngxMatTimepicker]="picker" [(ngModel)]="evento.hora_inicio" name="hora_inicio" (ngModelChange)="formatearHora('hora_inicio')"placeholder="Selecciona hora">
-          <ngx-mat-timepicker #picker></ngx-mat-timepicker>
+            <input matInput [ngxMatTimepicker]="pickerInicio" [(ngModel)]="evento.hora_inicio" name="hora_inicio" (ngModelChange)="formatearHora('hora_inicio')"placeholder="Selecciona hora">
+          <ngx-mat-timepicker #pickerInicio></ngx-mat-timepicker>
         </mat-form-field>
 
         <!-- Hora final -->
-        <mat-form-field appearance="outline" *ngIf="!editar">
+        <mat-form-field appearance="outline">
           <mat-label>Hora Final</mat-label>
           <input matInput [ngxMatTimepicker]="pickerFinal" [(ngModel)]="evento.hora_final" name="hora_final" (ngModelChange)="formatearHora('hora_final'); validarHoras()"placeholder="Ej. 10:00">
           <ngx-mat-timepicker #pickerFinal></ngx-mat-timepicker>
@@ -58,8 +58,7 @@
           {{ errorHora }}
         </div>
 
-
-      <mat-form-field appearance="outline" *ngIf="!editar">
+      <mat-form-field appearance="outline">
         <mat-label>Lugar</mat-label>
         <input matInput [(ngModel)]="evento.lugar" placeholder="Escribe el lugar"(keydown)="soloAlfanumerico($event)" style="text-transform: uppercase;" >
       </mat-form-field>
@@ -111,7 +110,7 @@
       <div class="section-buttons">
         <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
         <button *ngIf="!editar" class="btn btn-primary" (click)="registrar()">Registrar</button>
-        <button *ngIf="editar" class="btn btn-primary" (click)="actualizar()">Actualizar</button>
+        <button *ngIf="editar" class="btn btn-primary" [disabled]="errorHora" (click)="actualizar()">Actualizar</button>
       </div>
     </div>
   </div>

@@ -41,6 +41,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 //efcha
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
+
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
 import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
@@ -100,7 +101,8 @@ import { EditarEventoModalComponent } from './modals/editar-evento-modal/editar-
     MatSortModule,
     MatDialogModule,
     NgChartsModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    NgChartsModule
   ],
   providers: [
     CookieService,

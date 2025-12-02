@@ -36,7 +36,7 @@ nav {
   margin: 0;
 }
 
-.sidebar-list li {
+.sidebar-list > li:not(.dropdown-section) {
   display: flex;
   align-items: center;
   padding: 1rem 1.2rem;
@@ -51,6 +51,131 @@ nav {
     font-size: 1.2em;
     color: $icon-color;
     transition: color 0.18s;
+  }
+}
+
+.dropdown-section {
+  display: block !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.btn-dropdown {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  justify-content: flex-start;
+  padding: 1rem 1.2rem;
+  background: transparent;
+  border: none;
+  color: $text-color !important;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+
+  mat-icon {
+    color: $icon-color;
+    transition: transform 0.2s;
+  }
+
+  &:hover {
+    background: $sidebar-hover;
+  }
+}
+
+/* Rotación del icono expand_more */
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* ----- Botón principal del dropdown ----- */
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background .25s;
+  color: $text-color;
+  gap: .8rem;
+  font-size: 1rem;
+
+  mat-icon {
+    color: $icon-color;
+  }
+
+  &:hover {
+    background: $sidebar-hover;
+  }
+}
+
+/* Flecha */
+.arrow {
+  margin-left: auto;
+  transition: transform .25s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* ----- Submenú ----- */
+.dropdown-menu {
+  background: #1b2940;
+  margin-top: 4px;
+  border-radius: 10px;
+  padding-left: 2.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: white;
+    padding: .6rem 0;
+    cursor: pointer;
+    border-radius: 8px;
+
+    mat-icon {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  }
+}
+
+.dropdown-menu.open {
+  max-height: 200px;
+}
+
+
+/* Menú colapsable */
+.submenu {
+  list-style: none;
+  background: #1c2a3a;
+  padding-left: 2.2rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.26s ease;
+}
+
+.submenu.open {
+  max-height: 300px; // Ajustable
+}
+
+.submenu-item {
+  padding: 0.6rem 0.2rem;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
   }
 }
 

@@ -72,6 +72,12 @@ export class NavbarUserComponent implements OnInit {
 
   }
 
+  registroOpen = false;
+
+  toggleRegistro() {
+  this.registroOpen = !this.registroOpen;
+  }
+
   @HostListener('window:resize')
   onResize() {
     this.isMobileView = window.innerWidth <= 992;
@@ -147,6 +153,9 @@ export class NavbarUserComponent implements OnInit {
   }
   canSeeRegisterItem(): boolean {
     return this.isAdmin() || this.isTeacher();
+  }
+  canSeeEventsItem(): boolean {
+    return this.isAdmin()
   }
 
 }
