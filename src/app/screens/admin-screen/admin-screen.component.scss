@@ -298,3 +298,79 @@ body {
     background: rgba(255,255,255,0.06) !important;
   }
 }
+
+/* ==========================================================
+   FORZAR TABLA, BUSCADOR Y PAGINADOR A BLANCO (SIEMPRE)
+   ========================================================== */
+
+/* Fondo de la tabla */
+mat-table, table.mat-table {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 8px;
+}
+
+/* Encabezados */
+.mat-mdc-header-cell {
+  background: #e3f0ff !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #c8c8c8 !important;
+  font-weight: bold !important;
+}
+
+/* Filas */
+.mat-mdc-cell {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* Hover filas */
+.mat-mdc-row:hover {
+  background: #f5f7fa !important;
+}
+
+/* Iconos (editar / eliminar) */
+.td-editar { color: #0092B8 !important; }
+.td-eliminar { color: #E84150 !important; }
+
+/* PAGINADOR */
+.mat-mdc-paginator {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-top: 1px solid #ddd !important;
+}
+
+/* Flechas del paginador */
+.mat-mdc-paginator-icon,
+.mat-mdc-paginator-navigation-icon {
+  color: #000000 !important;
+}
+
+/* Select del paginador */
+.mat-mdc-select-value,
+.mat-mdc-select-arrow {
+  color: #000000 !important;
+}
+
+.mat-mdc-select-panel {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.mat-mdc-option {
+  color: #000000 !important;
+}
+.mat-mdc-option:hover,
+.mat-mdc-option.mdc-list-item--selected {
+  background: #e8f0ff !important;
+}
+
+/* INPUT DE BÚSQUEDA */
+input.mat-input-element,
+.mat-mdc-text-field-wrapper {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ccc !important;
+  border-radius: 6px !important;
+}
