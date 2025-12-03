@@ -344,4 +344,80 @@ table  { width: 100%; padding-bottom: 1.5rem; }
   justify-content: flex-end;
 }
 
+/* =========================
+   Mobile phone styles (≤575px)
+   ========================= */
+@media (max-width: 575px) {
+  /* Ajuste general del contenedor principal */
+  .main-content-admin {
+    margin-left: 0; /* elimina offset del sidebar */
+    padding: 0 0.5rem;
+  }
 
+  .body-admin {
+    padding: 0 0.5rem;
+  }
+
+  /* Botón registrar centrado y con tamaño adaptado */
+  .button-container {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .btn-registrar {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  /* Tabla responsive: scroll horizontal y textos más pequeños */
+  .table-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    font-size: 13px;
+    min-width: 700px; /* para mantener scroll horizontal */
+  }
+
+  .mat-mdc-header-cell {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  .mat-mdc-cell {
+    font-size: 12px !important;
+    padding: 4px 8px;
+  }
+
+  /* Iconos de acción más grandes y accesibles */
+  .td-editar i,
+  .td-eliminar i {
+    font-size: 22px;
+  }
+
+  /* Alertas centradas y más compactas */
+  .alert {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .alert .title-table {
+    font-size: 1rem;
+    margin: 0 auto;
+  }
+
+  /* Ajuste de títulos principales */
+  .title-perfil {
+    font-size: clamp(1.35rem, 1.1rem + 1.6vw, 2rem);
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .title-table {
+    font-size: clamp(1.25rem, 1rem + 1.4vw, 1.75rem);
+    text-align: center;
+  }
+
+}

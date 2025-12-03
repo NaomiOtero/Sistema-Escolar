@@ -137,7 +137,7 @@ export class AdministradoresService {
 public obtenerListaAdmins(): Observable<any>{
     const token = this.facadeService.getSessionToken();
     let headers: HttpHeaders;
-    if (token) {
+    if (token) {  
       headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
     } else {
       headers = new HttpHeaders({ 'Content-Type': 'application/json' });
