@@ -18,7 +18,7 @@
   --icon-delete-hover: #ce1626;
 }
 
-/* ===== TEMA OSCURO (SE ACTIVA DESDE ANGULAR) ===== */
+/* ===== TEMA OSCURO ===== */
 .dark-theme {
   --bg-main: #181a1b;
   --bg-card: #242526;
@@ -34,7 +34,7 @@
   --icon-delete-hover: #ff8fa1;
 }
 
-/* Fondo principal automático */
+/* Fondo general */
 body {
   background: var(--bg-main);
   color: var(--text-primary);
@@ -49,9 +49,8 @@ body {
   .main-content-admin { margin-left: 0; }
 }
 
+/* Layout general */
 .wrapper { height: auto; }
-
-/* Encabezados */
 .header-home,
 .header-home-admin {
   display: flex;
@@ -60,7 +59,6 @@ body {
   width: 100%;
 }
 
-/* Cuerpos */
 .body-alumnos,
 .body-admin {
   display: flex;
@@ -68,20 +66,19 @@ body {
   width: 100%;
 }
 
-/* Contenedores */
 .container {
   max-width: 90vw;
   width: 100%;
   margin: 0 auto;
 }
 
-/* Alert */
+/* ALERT */
 .alert .title-table {
   text-align: center;
   margin: 0 auto;
 }
 
-.alert-warning{
+.alert-warning {
   font-family: Nexa;
   font-size: 16px;
   color: var(--text-primary);
@@ -95,7 +92,7 @@ body {
   margin-bottom: 2rem;
 }
 
-/* Tabla */
+/* TABLE WRAPPER */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -104,6 +101,7 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.07);
 }
 
+/* ENCABEZADO TABLA */
 .mat-mdc-header-cell {
   color: var(--text-primary) !important;
   border-bottom-color: var(--border-color) !important;
@@ -111,13 +109,14 @@ body {
   font-size: 18px;
 }
 
+/* CELDAS */
 .mat-mdc-cell {
   font-family: Nexa !important;
   font-size: 15px !important;
   color: var(--text-primary) !important;
 }
 
-/* Acciones */
+/* ACCIONES */
 .td-editar {
   color: var(--icon-edit) !important;
   cursor: pointer;
@@ -140,7 +139,7 @@ body {
   font-size: 25px !important;
 }
 
-/* Títulos */
+/* TITULOS */
 .title-perfil,
 .title-table {
   color: var(--text-primary);
@@ -151,20 +150,17 @@ body {
   overflow-wrap: anywhere;
 }
 
-/* Saludo */
 .title-perfil {
   margin-left: 3rem;
   font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2.25rem);
 }
 
-/* Título card */
 .title-table {
   margin-left: 3rem;
   font-size: clamp(1.125rem, 0.95rem + 0.9vw, 1.875rem);
 }
 
-/* === MEDIA QUERIES (idénticas a tu versión) === */
-
+/* MEDIA QUERIES */
 @media (min-width: 635px) and (max-width: 660px) {
   .title-perfil {
     font-size: clamp(1.25rem, 0.9rem + 1vw, 1.9rem);
@@ -242,42 +238,39 @@ body {
 
   /* Fondo general de la tabla */
   mat-table, table.mat-table {
-    background: var(--table-bg) !important;
+    background: var(--bg-table) !important;
     color: var(--text-primary) !important;
   }
 
   /* Celdas */
   .mat-cell, .mat-footer-cell {
-    background-color: var(--table-bg) !important;
+    background-color: var(--bg-table) !important;
     color: var(--text-primary) !important;
     border-bottom-color: #444 !important;
   }
 
   /* Encabezados */
   .mat-header-cell {
-    background-color: var(--primary) !important;
+    background-color: var(--bg-card) !important;
     color: var(--text-primary) !important;
     border-bottom-color: #555 !important;
     font-weight: 600;
   }
 
-  /* Hover */
+  /* Hover filas */
   .mat-row:hover {
     background-color: rgba(255,255,255,0.05) !important;
   }
 
-  /* Botones de iconos dentro de la tabla */
+  /* Iconos */
   button mat-icon,
   .mat-icon {
     color: var(--text-primary) !important;
   }
 
-  /* ============================
-     PAGINADOR (mat-paginator)
-  ============================= */
-
+  /* PAGINADOR */
   .mat-paginator {
-    background: var(--table-bg) !important;
+    background: var(--bg-card) !important;
     color: var(--text-primary) !important;
   }
 
@@ -291,9 +284,8 @@ body {
     color: var(--text-primary) !important;
   }
 
-  /* panel del select en paginator */
   .mat-select-panel {
-    background: var(--table-bg) !important;
+    background: var(--bg-card) !important;
     color: var(--text-primary) !important;
   }
 
@@ -306,4 +298,3 @@ body {
     background: rgba(255,255,255,0.06) !important;
   }
 }
-
