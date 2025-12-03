@@ -233,3 +233,77 @@ body {
     display: inline-block;
   }
 }
+
+/* ============================
+   TABLA (mat-table) MODO DARK
+============================ */
+
+.dark-theme {
+
+  /* Fondo general de la tabla */
+  mat-table, table.mat-table {
+    background: var(--table-bg) !important;
+    color: var(--text-primary) !important;
+  }
+
+  /* Celdas */
+  .mat-cell, .mat-footer-cell {
+    background-color: var(--table-bg) !important;
+    color: var(--text-primary) !important;
+    border-bottom-color: #444 !important;
+  }
+
+  /* Encabezados */
+  .mat-header-cell {
+    background-color: var(--primary) !important;
+    color: var(--text-primary) !important;
+    border-bottom-color: #555 !important;
+    font-weight: 600;
+  }
+
+  /* Hover */
+  .mat-row:hover {
+    background-color: rgba(255,255,255,0.05) !important;
+  }
+
+  /* Botones de iconos dentro de la tabla */
+  button mat-icon,
+  .mat-icon {
+    color: var(--text-primary) !important;
+  }
+
+  /* ============================
+     PAGINADOR (mat-paginator)
+  ============================= */
+
+  .mat-paginator {
+    background: var(--table-bg) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .mat-paginator-icon,
+  .mat-paginator-navigation-icon {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-select-value,
+  .mat-select-arrow {
+    color: var(--text-primary) !important;
+  }
+
+  /* panel del select en paginator */
+  .mat-select-panel {
+    background: var(--table-bg) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .mat-option {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-option:hover,
+  .mat-option.mat-active {
+    background: rgba(255,255,255,0.06) !important;
+  }
+}
+
