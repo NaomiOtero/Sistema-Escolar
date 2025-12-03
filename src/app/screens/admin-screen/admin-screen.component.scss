@@ -374,3 +374,77 @@ input.mat-input-element,
   border: 1px solid #ccc !important;
   border-radius: 6px !important;
 }
+
+/* ===========================
+   BUSCADOR: fondo blanco y borde
+   Compatible con Angular Material
+   =========================== */
+
+/* Si usas un wrapper como .search-wrapper, añade la clase al HTML.
+   Si no, las reglas abajo son lo bastante específicas. */
+
+/* Fondo y borde del contenedor (mat-form-field) */
+.mat-form-field-wrapper,
+.mat-form-field-appearance-outline .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  background: #ffffff !important;
+  border-radius: 6px !important;
+  border: 1px solid #cfcfcf !important;
+}
+
+/* El input en sí (texto y placeholder) */
+.mat-input-element,
+input.mat-input-element {
+  background: transparent !important; /* el fondo lo controla el wrapper */
+  color: #000000 !important;
+  padding: 0.6rem 0.75rem !important;
+}
+
+/* Placeholder oscuro y legible */
+::ng-deep .mat-input-element::placeholder {
+  color: #6b6b6b !important;
+  opacity: 1 !important;
+}
+
+/* Label (floating label) color */
+.mat-form-field-label {
+  color: #3b3b3b !important;
+}
+
+/* Focus: borde más visible */
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  border-color: #6aa0ff !important; /* azul suave al enfocar */
+  box-shadow: 0 0 0 4px rgba(58,122,254,0.08) !important;
+}
+
+/* Hover sobre el wrapper */
+.mat-form-field-wrapper:hover,
+.mat-form-field-appearance-outline:hover .mat-form-field-outline {
+  border-color: #bfcfe8 !important;
+}
+
+/* Tamaño / altura consistente */
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0 !important;
+  min-height: 44px !important;
+}
+
+/* Si el input tiene icono o hint, asegúrate que se vea */
+.mat-form-field-prefix, .mat-form-field-suffix, .mat-hint {
+  color: #333 !important;
+}
+
+/* Para que en modo dark no lo sobreescriba: */
+.dark-theme .mat-form-field-wrapper,
+.dark-theme .mat-form-field-appearance-outline .mat-form-field-outline {
+  background: #ffffff !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+/* Si tu buscador tiene una clase propia, por ejemplo .search-input, añade esta versión más específica */
+.search-input .mat-form-field-wrapper,
+.search-input input.mat-input-element {
+  background: #fff !important;
+  color: #000 !important;
+}
