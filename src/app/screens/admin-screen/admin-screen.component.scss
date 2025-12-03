@@ -34,7 +34,10 @@
   --icon-delete-hover: #ff8fa1;
 }
 
-/* Fondo general */
+/* =========================
+   FONDO GENERAL
+========================= */
+
 body {
   background: var(--bg-main);
   color: var(--text-primary);
@@ -45,6 +48,7 @@ body {
   margin-left: 220px;
   transition: margin-left 0.3s;
 }
+
 @media (max-width: 991px) {
   .main-content-admin { margin-left: 0; }
 }
@@ -72,7 +76,10 @@ body {
   margin: 0 auto;
 }
 
-/* ALERT */
+/* =========================
+   ALERT
+========================= */
+
 .alert .title-table {
   text-align: center;
   margin: 0 auto;
@@ -92,7 +99,10 @@ body {
   margin-bottom: 2rem;
 }
 
-/* TABLE WRAPPER */
+/* =========================
+   TABLE WRAPPER
+========================= */
+
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -101,7 +111,7 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.07);
 }
 
-/* ENCABEZADO TABLA */
+/* Encabezado */
 .mat-mdc-header-cell {
   color: var(--text-primary) !important;
   border-bottom-color: var(--border-color) !important;
@@ -109,19 +119,18 @@ body {
   font-size: 18px;
 }
 
-/* CELDAS */
+/* Celdas */
 .mat-mdc-cell {
   font-family: Nexa !important;
   font-size: 15px !important;
   color: var(--text-primary) !important;
 }
 
-/* ACCIONES */
+/* Acciones */
 .td-editar {
   color: var(--icon-edit) !important;
   cursor: pointer;
   font-size: 20px !important;
-  text-align: center;
 }
 .td-editar:hover {
   color: var(--icon-edit-hover) !important;
@@ -132,21 +141,22 @@ body {
   color: var(--icon-delete) !important;
   cursor: pointer;
   font-size: 20px !important;
-  text-align: center;
 }
 .td-eliminar:hover {
   color: var(--icon-delete-hover) !important;
   font-size: 25px !important;
 }
 
-/* TITULOS */
+/* =========================
+   TITULOS
+========================= */
+
 .title-perfil,
 .title-table {
   color: var(--text-primary);
   display: block;
   line-height: 1.1;
   font-family: Nexa-Bold;
-  text-wrap: balance;
   overflow-wrap: anywhere;
 }
 
@@ -160,291 +170,96 @@ body {
   font-size: clamp(1.125rem, 0.95rem + 0.9vw, 1.875rem);
 }
 
-/* MEDIA QUERIES */
-@media (min-width: 635px) and (max-width: 660px) {
-  .title-perfil {
-    font-size: clamp(1.25rem, 0.9rem + 1vw, 1.9rem);
-  }
-  .title-table {
-    font-size: clamp(1.05rem, 0.85rem + 0.7vw, 1.6rem);
-  }
+/* =========================
+   TABLA MODO DARK
+========================= */
+
+.dark-theme mat-table,
+.dark-theme table.mat-table {
+  background: var(--bg-table) !important;
+  color: var(--text-primary) !important;
 }
 
-@media (min-width: 576px) and (max-width: 699px) {
-  .row.mt-5.mb-5 > .col-12 br { display: none; }
-
-  .title-perfil,
-  .title-table {
-    text-align: left;
-    margin-left: 1.5rem;
-  }
-
-  .row .col-12 .title-perfil:first-of-type {
-    font-size: clamp(1.25rem, 1.0rem + 1.1vw, 1.9rem);
-  }
+.dark-theme .mat-cell,
+.dark-theme .mat-footer-cell {
+  background-color: var(--bg-table) !important;
+  color: var(--text-primary) !important;
 }
 
-@media (min-width: 700px) and (max-width: 740px) {
-  .row.mt-5.mb-5 > .col-12 br { display: none; }
-  .title-perfil,
-  .title-table {
-    text-align: left;
-    margin-left: 3rem;
-  }
+.dark-theme .mat-header-cell {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
 }
 
-@media (min-width: 741px) {
-  .title-perfil,
-  .title-table {
-    text-align: left;
-    margin-left: 3rem;
-  }
-}
+/* =========================
+   BUSCADOR — SIEMPRE BLANCO
+========================= */
 
-@media (max-width: 575px) {
-  .row.mt-5.mb-5 > .col-12 br { display: none; }
-
-  .title-perfil,
-  .title-table {
-    margin-left: 0;
-    text-align: center;
-  }
-}
-
-/* Tablets 805–992 px */
-@media (max-width: 992px) and (min-width: 805px) {
-  .container {
-    max-width: 95vw;
-    width: 130%;
-  }
-}
-
-/* Truncar nombre */
-@media (max-width: 575px) {
-  .user-name {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: min(92vw, 540px);
-    display: inline-block;
-  }
-}
-
-/* ============================
-   TABLA (mat-table) MODO DARK
-============================ */
-
-.dark-theme {
-
-  /* Fondo general de la tabla */
-  mat-table, table.mat-table {
-    background: var(--bg-table) !important;
-    color: var(--text-primary) !important;
-  }
-
-  /* Celdas */
-  .mat-cell, .mat-footer-cell {
-    background-color: var(--bg-table) !important;
-    color: var(--text-primary) !important;
-    border-bottom-color: #444 !important;
-  }
-
-  /* Encabezados */
-  .mat-header-cell {
-    background-color: var(--bg-card) !important;
-    color: var(--text-primary) !important;
-    border-bottom-color: #555 !important;
-    font-weight: 600;
-  }
-
-  /* Hover filas */
-  .mat-row:hover {
-    background-color: rgba(255,255,255,0.05) !important;
-  }
-
-  /* Iconos */
-  button mat-icon,
-  .mat-icon {
-    color: var(--text-primary) !important;
-  }
-
-  /* PAGINADOR */
-  .mat-paginator {
-    background: var(--bg-card) !important;
-    color: var(--text-primary) !important;
-  }
-
-  .mat-paginator-icon,
-  .mat-paginator-navigation-icon {
-    color: var(--text-primary) !important;
-  }
-
-  .mat-select-value,
-  .mat-select-arrow {
-    color: var(--text-primary) !important;
-  }
-
-  .mat-select-panel {
-    background: var(--bg-card) !important;
-    color: var(--text-primary) !important;
-  }
-
-  .mat-option {
-    color: var(--text-primary) !important;
-  }
-
-  .mat-option:hover,
-  .mat-option.mat-active {
-    background: rgba(255,255,255,0.06) !important;
-  }
-}
-
-/* ==========================================================
-   FORZAR TABLA, BUSCADOR Y PAGINADOR A BLANCO (SIEMPRE)
-   ========================================================== */
-
-/* Fondo de la tabla */
-mat-table, table.mat-table {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-radius: 8px;
-}
-
-/* Encabezados */
-.mat-mdc-header-cell {
-  background: #e3f0ff !important;
-  color: #000000 !important;
-  border-bottom: 1px solid #c8c8c8 !important;
-  font-weight: bold !important;
-}
-
-/* Filas */
-.mat-mdc-cell {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-bottom: 1px solid #e0e0e0 !important;
-}
-
-/* Hover filas */
-.mat-mdc-row:hover {
-  background: #f5f7fa !important;
-}
-
-/* Iconos (editar / eliminar) */
-.td-editar { color: #0092B8 !important; }
-.td-eliminar { color: #E84150 !important; }
-
-/* PAGINADOR */
-.mat-mdc-paginator {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-top: 1px solid #ddd !important;
-}
-
-/* Flechas del paginador */
-.mat-mdc-paginator-icon,
-.mat-mdc-paginator-navigation-icon {
-  color: #000000 !important;
-}
-
-/* Select del paginador */
-.mat-mdc-select-value,
-.mat-mdc-select-arrow {
-  color: #000000 !important;
-}
-
-.mat-mdc-select-panel {
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-.mat-mdc-option {
-  color: #000000 !important;
-}
-.mat-mdc-option:hover,
-.mat-mdc-option.mdc-list-item--selected {
-  background: #e8f0ff !important;
-}
-
-/* INPUT DE BÚSQUEDA */
-input.mat-input-element,
-.mat-mdc-text-field-wrapper {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #ccc !important;
-  border-radius: 6px !important;
-}
-
-/* ===========================
-   BUSCADOR: fondo blanco y borde
-   Compatible con Angular Material
-   =========================== */
-
-/* Si usas un wrapper como .search-wrapper, añade la clase al HTML.
-   Si no, las reglas abajo son lo bastante específicas. */
-
-/* Fondo y borde del contenedor (mat-form-field) */
-.mat-form-field-wrapper,
 .mat-form-field-appearance-outline .mat-form-field-outline,
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-wrapper {
   background: #ffffff !important;
   border-radius: 6px !important;
   border: 1px solid #cfcfcf !important;
 }
 
-/* El input en sí (texto y placeholder) */
-.mat-input-element,
-input.mat-input-element {
-  background: transparent !important; /* el fondo lo controla el wrapper */
-  color: #000000 !important;
-  padding: 0.6rem 0.75rem !important;
-}
-
-/* Placeholder oscuro y legible */
-::ng-deep .mat-input-element::placeholder {
-  color: #6b6b6b !important;
-  opacity: 1 !important;
-}
-
-/* Label (floating label) color */
-.mat-form-field-label {
-  color: #3b3b3b !important;
-}
-
-/* Focus: borde más visible */
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
-  border-color: #6aa0ff !important; /* azul suave al enfocar */
-  box-shadow: 0 0 0 4px rgba(58,122,254,0.08) !important;
-}
-
-/* Hover sobre el wrapper */
-.mat-form-field-wrapper:hover,
-.mat-form-field-appearance-outline:hover .mat-form-field-outline {
-  border-color: #bfcfe8 !important;
-}
-
-/* Tamaño / altura consistente */
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0 !important;
-  min-height: 44px !important;
-}
-
-/* Si el input tiene icono o hint, asegúrate que se vea */
-.mat-form-field-prefix, .mat-form-field-suffix, .mat-hint {
-  color: #333 !important;
-}
-
-/* Para que en modo dark no lo sobreescriba: */
 .dark-theme .mat-form-field-wrapper,
 .dark-theme .mat-form-field-appearance-outline .mat-form-field-outline {
   background: #ffffff !important;
-  border: 1px solid #d0d0d0 !important;
+  border: 1px solid #cfcfcf !important;
 }
 
-/* Si tu buscador tiene una clase propia, por ejemplo .search-input, añade esta versión más específica */
-.search-input .mat-form-field-wrapper,
-.search-input input.mat-input-element {
-  background: #fff !important;
+.mat-input-element {
+  background: transparent !important;
+  color: #000 !important;
+}
+
+::ng-deep .mat-input-element::placeholder {
+  color: #6b6b6b !important;
+}
+
+.mat-form-field-label {
+  color: #333 !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  border-color: #6aa0ff !important;
+  box-shadow: 0 0 0 4px rgba(58,122,254,0.08) !important;
+}
+
+/* =========================
+   TABLA / PAGINADOR (BLANCO)
+========================= */
+
+mat-table, table.mat-table {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+.mat-mdc-header-cell {
+  background: #e3f0ff !important;
+  color: #000 !important;
+}
+
+.mat-mdc-cell {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+.mat-mdc-row:hover {
+  background: #f5f7fa !important;
+}
+
+.mat-mdc-paginator {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+.mat-mdc-select-value,
+.mat-mdc-select-arrow {
+  color: #000 !important;
+}
+
+.mat-mdc-option {
   color: #000 !important;
 }
