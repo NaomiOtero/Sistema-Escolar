@@ -18,6 +18,7 @@ export class AdminScreenComponent implements OnInit {
   // Variables y métodos del componente
   public name_user:string = "";
   public lista_admins:any[]= [];
+  paletteMode: 'light' | 'dark' = 'light';
 
   //Para la tabla
 displayedColumns: string[] = [
@@ -66,6 +67,15 @@ displayedColumns: string[] = [
     };
   }
 
+  togglePalette() {
+  this.paletteMode = this.paletteMode === 'light' ? 'dark' : 'light';
+
+  if (this.paletteMode === 'dark') {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+}
   //Obtener lista de usuarios
    public obtenerAdmins() {
     this.administradoresService.obtenerListaAdmins().subscribe(
