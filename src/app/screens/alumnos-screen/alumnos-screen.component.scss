@@ -1,11 +1,11 @@
 // Compensa el sidebar en desktop
-.main-content-maestros {
+.main-content-admin {
   margin-left: 220px;
   transition: margin-left 0.3s;
 }
 
 @media (max-width: 991px) {
-  .main-content-maestros {
+  .main-content-admin {
     margin-left: 0;
   }
 }
