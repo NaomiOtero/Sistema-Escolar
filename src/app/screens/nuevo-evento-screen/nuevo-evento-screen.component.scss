@@ -185,3 +185,32 @@ textarea {
     font-size: 23px;
   }
 }
+
+
+/* ===========================
+   FIX TABLA ALUMNOS — MOBILE
+   =========================== */
+
+@media (max-width: 575px) {
+
+  /* Permitir ancho real de la tabla */
+  ::ng-deep table.mat-mdc-table {
+    min-width: 1200px !important;
+    width: 1200px !important;
+  }
+
+  /* Quitar compresión de columnas */
+  ::ng-deep .mat-mdc-table {
+    table-layout: auto !important;
+  }
+
+  /* Scroll horizontal sin deformar */
+  .table-scroll-wrapper {
+    overflow-x: auto !important;
+    white-space: nowrap;
+  }
+
+  .table-scroll-wrapper table {
+    white-space: normal !important;
+  }
+}
