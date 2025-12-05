@@ -116,8 +116,7 @@ export class EventosScreenComponent implements OnInit {
       }
     );
   }
-
-   // Role helpers
+  
   isAdmin(): boolean {
     return this.rol === 'administrador';
   }
