@@ -1,5 +1,5 @@
 // Compensa el sidebar en desktop
-.main-content-maestros {
+.main-content-admin {
   margin-left: 220px;
   transition: margin-left 0.3s;
 }
@@ -15,7 +15,7 @@
 
 /* Encabezados usados en su HTML */
 .header-home,
-.header-home-maestros {
+.header-home-admin {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
